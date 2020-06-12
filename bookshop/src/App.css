@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+
+.darkblue {
+  color: darkblue;
+}
+
+.form-group-zero-margin {
+  margin-bottom: -15px;
+}
+
+.center_div{
+  margin: 0 auto;
+  width:80% /* value of your choice which suits your alignment */
+}
