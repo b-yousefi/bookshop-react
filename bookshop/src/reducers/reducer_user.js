@@ -1,11 +1,15 @@
 import { USER_ACTIONS } from '../actions/actions_user';
 
 export function UserReducer(state = null, action) {
+    
     switch (action.type) {
         case USER_ACTIONS.FETCH:
             return { ...state, ...action.payload.data };
         case USER_ACTIONS.LOGIN:
-            return { username: action.payload, isLoggedIn: true };
+            if (!action.error && action.payload !== "")
+                return { username: action.payload, isLoggedIn: true };
+            else
+                return state;
         case USER_ACTIONS.LOGOUT:
             return { isLoggedIn: false };
         case USER_ACTIONS.REGISTER:

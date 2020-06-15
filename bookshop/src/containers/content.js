@@ -7,20 +7,28 @@ import {
     AppBar,
     IconButton,
     Button,
-    Toolbar
-} from '@material-ui/core'
+    Toolbar,
+    Grid,
+} from '@material-ui/core';
 
 
 import { logoutUser } from '../actions/actions_user';
-import CategoryList from '../containers/categoryList';
-import LoginForm from '../components/form_login';
+import { changeView } from '../actions/actions_view';
+import { clearNotif } from '../actions/actions'
+import CategoryList from './categoryList';
+import LoginForm from './form_login';
+import UserProfile from './form_user';
+import TransitionAlerts from '../components/TransitionAlerts';
 
-class Menubar extends Component {
+
+const VIEWS = { STORE: 'STORE', PROFILE: 'PROFILE' }
+
+class Content extends Component {
 
     create_tlb_home(classes) {
         return (
             <Button
-                href="/"
+                onClick={this.changeView(VIEWS.STORE)}
                 color="inherit"
                 className={classes.button}
                 startIcon={<FontAwesomeIcon icon="book-open" />}
@@ -34,7 +42,7 @@ class Menubar extends Component {
         return (
             <IconButton
                 aria-label={!this.props.user.isLoggedIn ? 'Sign Up' : 'Profile'}
-                onClick={this.handleProfileMenuOpen}
+                onClick={this.changeView(VIEWS.PROFILE)}
                 color="inherit"
             >
                 <FontAwesomeIcon icon="user" />
@@ -62,22 +70,35 @@ class Menubar extends Component {
 
         return (
             <Toolbar>
-
                 {this.create_tlb_home(classes)}
-
                 <CategoryList classes={classes} />
-
                 <div className={classes.grow} />
-
                 {this.create_tlb_user()}
-
                 {this.create_tlb_loginout()}
-
             </Toolbar>
         )
     }
 
-    handleProfileMenuOpen = (event) => {
+    create_content() {
+        return (
+            <Grid container justify="center" alignItems="center">
+                <Grid item xs={12} >
+                    {this.props.notification ?
+                        <TransitionAlerts message={this.props.notification.message ? this.props.notification.message : 'error'} severity={this.props.notification.severity} open={this.props.error !== null}
+                            onClick={() => {
+                                this.props.clearNotif();
+                            }}
+                        /> : ''}
+                </Grid>
+                <Grid item md={8} >
+                    {this.props.view === VIEWS.PROFILE ? <UserProfile /> : ''}
+                </Grid>
+            </Grid>
+        )
+    }
+
+    changeView = view => (event) => {
+        this.props.changeView(view);
     }
 
     onLogout = () => {
@@ -85,13 +106,12 @@ class Menubar extends Component {
     }
 
     render() {
-
-
         return (
             <React.Fragment>
                 <AppBar position="sticky">
                     {this.create_toolbar()}
                 </AppBar>
+                {this.create_content()}
             </React.Fragment>
         );
     }
@@ -99,12 +119,14 @@ class Menubar extends Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user,
+        view: state.view,
+        notification: state.notification
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ logoutUser }, dispatch);
+    return bindActionCreators({ logoutUser, changeView, clearNotif }, dispatch);
 }
 
 const styles = ({
@@ -114,4 +136,4 @@ const styles = ({
 }
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Menubar));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Content));

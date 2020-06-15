@@ -6,27 +6,16 @@ import {
     Input,
     InputAdornment,
     IconButton,
+    FormHelperText,
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 
 
-const useStyles = makeStyles((theme) => ({
-    margin: {
-        margin: theme.spacing(1),
-    },
-    withoutLabel: {
-        marginTop: theme.spacing(3),
-    },
-    textField: {
-        width: '25ch',
-    },
-}));
-
-export default function PasswordField(props) {
+export default function PasswordControl(props) {
     const [values, setValues] = React.useState({
-        showPassword: false,
+        showPassword: false
     });
+
+    const { name, required, shrink, value, onChange, fullWidth, meta, error } = props;
 
     const handleClickShowPassword = () => {
         setValues({ ...values, showPassword: !values.showPassword });
@@ -36,17 +25,28 @@ export default function PasswordField(props) {
         event.preventDefault();
     };
 
+    let showError = false;
+    let message = '';
+    if (error != null && error !== undefined) {
+        showError = true;
+        message = error;
+    }
+    if (meta !== undefined && meta.error && meta.touched) {
+        showError = true;
+        message = meta.error;
+    }
 
-    const classes = useStyles();
     return (
-        <FormControl className={clsx(classes.margin, classes.textField)} >
-            <InputLabel htmlFor="standard-adornment-password" shrink={true} >Password</InputLabel>
+        <FormControl error={showError} style={{ width: fullWidth ? '100%' : '25ch' }} >
+            <InputLabel required={required} htmlFor="standard-adornment-password" shrink={shrink} >Password</InputLabel>
             <Input
-                id="password"
+                fullWidth
+                name={name}
                 placeholder="password"
                 type={values.showPassword ? 'text' : 'password'}
-                value={props.value}
-                onChange={props.onChange}
+                value={value}
+                onChange={onChange}
+
                 endAdornment={
                     <InputAdornment position="end">
                         <IconButton
@@ -59,6 +59,9 @@ export default function PasswordField(props) {
                     </InputAdornment>
                 }
             />
+            <FormHelperText id="component-helper-text">
+                {message}
+            </FormHelperText>
         </FormControl>
     )
 }

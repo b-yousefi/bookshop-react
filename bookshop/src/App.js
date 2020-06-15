@@ -3,17 +3,16 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import {
   faCheckSquare, faCoffee, faStar, faEdit, faTrash, faFilm, faBook, faBookOpen,
-  faSignInAlt, faUser, faSignOutAlt, faChevronLeft, faBars, faEye, faEyeSlash
+  faSignInAlt, faUser, faSignOutAlt, faChevronLeft, faBars, faEye, faEyeSlash, faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { withStyles } from '@material-ui/core/styles';
 
 import './App.css';
-import Menubar from './containers/menu';
-import { Container } from '@material-ui/core';
+import Content from './containers/content';
 
 
 library.add(fab, faCheckSquare, faCoffee, faStar, faEdit, faTrash, faFilm, faBook, faBookOpen,
-  faSignInAlt, faUser, faSignOutAlt, faChevronLeft, faBars, faEye, faEyeSlash)
+  faSignInAlt, faUser, faSignOutAlt, faChevronLeft, faBars, faEye, faEyeSlash, faTimes)
 
 
 
@@ -43,10 +42,7 @@ class App extends Component {
             <span>This is just a sample website view source code at <a href="https://github.com/b-yousefi/SampleProject">github</a> </span>
           </h1>
         </div>
-        <Menubar />
-        <Container>
-          <h1>Home</h1>
-        </Container>
+        <Content />
       </div>
     );
   }

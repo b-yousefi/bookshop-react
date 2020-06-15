@@ -26,14 +26,6 @@ class PopperBtn extends Component {
 
     };
 
-    componentDidMount() {
-        document.addEventListener('scroll', this.onReferenceParentScroll, true);
-    }
-
-    onReferenceParentScroll = (event) => {
-        this.setState({ open: false });
-    }
-
     render() {
         return (
             <React.Fragment>

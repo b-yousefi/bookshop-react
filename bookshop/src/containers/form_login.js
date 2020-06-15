@@ -10,8 +10,8 @@ import {
 
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
-import PopperBtn from './popper_button';
-import PasswordField from './field_password'
+import PopperBtn from '../components/popper_button';
+import PasswordControl from '../components/form/control_password';
 
 
 class LoginForm extends Component {
@@ -23,20 +23,47 @@ class LoginForm extends Component {
             username: '',
             password: ''
         },
-        showPassword: false
+        showPassword: false,
+        errors: {
+            username: undefined,
+            password: undefined
+        }
     }
 
     inputChanged = event => {
         let cred = this.state.credentials;
-        cred[event.target.id] = event.target.value;
-        this.setState({ credentials: cred });
+        cred[event.target.name] = event.target.value;
+
+        let errors = this.state.errors;
+        errors[event.target.name] = null;
+
+        if (cred[event.target.name] === "") {
+            errors[event.target.name] = "Required";
+        }
+        this.setState({ credentials: cred, errors });
+    }
+
+    validate = () => {
+        let errors = this.state.errors;
+        if (this.state.credentials.username === "") {
+            errors.username = "Required";
+        }
+        if (this.state.credentials.password === "") {
+            errors.password = "Required";
+        }
+        this.setState({ errors });
+        return this.state.errors.username === null && this.state.errors.password === null;
     }
 
     onSubmitClicked = event => {
         event.preventDefault();
-        console.log("Submit Clicked");
+        if (this.validate()) {
+            this.props.loginUser(this.state.credentials);
+            this.setState()
+        }
+        else {
 
-        this.props.loginUser(this.state.credentials);
+        }
     }
 
     create_form() {
@@ -46,19 +73,21 @@ class LoginForm extends Component {
                 <Grid container  >
                     <Grid item xs={12} container justify="center" alignItems="center">
                         <TextField
-                            onChange={this.inputChanged} value={this.state.credentials.username} id="username"
+                            onChange={this.inputChanged} value={this.state.credentials.username} name="username"
                             className={clsx(classes.margin, classes.textField)}
                             label="Username"
                             placeholder="user@mail.com"
                             margin="normal"
+                            error={this.state.errors && this.state.errors.username}
+                            helperText={this.state.errors && this.state.errors.username}
                             InputLabelProps={{
                                 shrink: true,
                             }}
                             required
                         />
                     </Grid>
-                    <Grid item xs={12} container justify="center" alignItems="center">
-                        <PasswordField onChange={this.inputChanged} value={this.state.credentials.password} />
+                    <Grid item xs={12} style={{ margin: 8 }} container justify="center" alignItems="center">
+                        <PasswordControl error={this.state.errors && this.state.errors.password} name="password" required shrink={true} onChange={this.inputChanged} value={this.state.credentials.password} />
                     </Grid>
                     <Grid item xs={12} container justify="center" alignItems="center" >
                         <Button variant="contained" type="submit" className={classes.submit} color="primary">Login</Button>
