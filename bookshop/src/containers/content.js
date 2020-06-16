@@ -84,7 +84,17 @@ class Content extends Component {
             <Grid container justify="center" alignItems="center">
                 <Grid item xs={12} >
                     {this.props.notification ?
-                        <TransitionAlerts message={this.props.notification.message ? this.props.notification.message : 'error'} severity={this.props.notification.severity} open={this.props.error !== null}
+                        <TransitionAlerts title={this.props.notification.message ? this.props.notification.message : 'error'}
+                            message={this.props.notification.errors ?
+                                this.props.notification.errors.map((error, i) => {
+                                    return (
+                                        <div key={i}>
+                                            {error.error}
+                                            <br />
+                                        </div>)
+                                }) : 'Some error occurred!!!!'
+                            }
+                            severity={this.props.notification.severity} open={this.props.notification !== null}
                             onClick={() => {
                                 this.props.clearNotif();
                             }}

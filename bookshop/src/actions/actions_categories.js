@@ -18,7 +18,7 @@ export function fetchCategories() {
                 );
             }).catch(error => {
                 dispatch(
-                    setError(error, CAT_ACTIONS.FETCH)
+                    setError(error.response.data, CAT_ACTIONS.FETCH)
                 );
             })
     }

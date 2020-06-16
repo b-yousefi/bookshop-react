@@ -39,7 +39,7 @@ export function loginUser(credentials) {
             );
         }).catch(error => {
             dispatch(
-                setError(error, USER_ACTIONS.LOGIN)
+                setError(error.response.data, USER_ACTIONS.LOGIN)
             )
         })
     }
@@ -66,7 +66,7 @@ export function regsiterUser(user) {
             })
             .catch(error => {
                 dispatch(
-                    setError(error, USER_ACTIONS.REGISTER)
+                    setError(error.response.data, USER_ACTIONS.REGISTER)
                 );
             })
     }
@@ -86,7 +86,7 @@ export function updateUser(user) {
             })
             .catch(error => {
                 dispatch(
-                    setError(error, USER_ACTIONS.UPDATE)
+                    setError(error.response.data, USER_ACTIONS.UPDATE)
                 );
             })
     }

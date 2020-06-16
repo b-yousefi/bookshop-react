@@ -22,12 +22,12 @@ export function setSucc(action, msg = "Successfull") {
 }
 
 export function setError(error, cause = null) {
-
     return {
         type: COMMON.SET_NOTIF,
         payload: error,
         notif: {
-            message: "Error",
+            message: error.message,
+            errors: error.errors,
             cause: cause,
             severity: COMMON.ERROR
         }
