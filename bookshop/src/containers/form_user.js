@@ -15,7 +15,7 @@ import {
 import PasswordControl from '../components/form/control_password';
 import PhoneNumberControl from '../components/form/control_phone_number';
 
-class UserProfile extends Component {
+class UserForm extends Component {
 
     componentDidMount() {
         if (this.props.user.isLoggedIn) {
@@ -196,4 +196,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ fetchUser, updateUser, regsiterUser }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(UserForm);

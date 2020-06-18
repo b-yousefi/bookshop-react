@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { Route, BrowserRouter } from 'react-router-dom';
+
 import RootReducer from './reducers/index'
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -16,7 +16,6 @@ let initialState = {
   user: {
     isLoggedIn: false
   },
-  view: 'STORE',
   notification: null,
 };
 
@@ -29,9 +28,7 @@ const store = applyMiddleware(ReduxPromise, ReduxThunk,)(createStore);
 const routing = (
 
   <Provider store={store(RootReducer, initialState)}>
-    <BrowserRouter>
-      <Route exact path="/" component={App} />
-    </BrowserRouter>
+    <App/>
   </Provider>
 )
 
