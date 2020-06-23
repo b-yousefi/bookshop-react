@@ -9,7 +9,7 @@ class PopperBtn extends Component {
     }
 
     state = {
-        open: false
+        open: this.props.open
     }
 
     handleClose = (event) => {

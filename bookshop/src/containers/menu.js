@@ -61,6 +61,16 @@ class Menu extends Component {
         )
     }
 
+    create_tlb_authors(classes) {
+        return (
+            <Button color="inherit"
+                className={classes.button}
+                component={NavLink} to="/authors">
+                Authors
+            </Button>
+        )
+    }
+
     create_toolbar() {
         const { classes } = this.props;
 
@@ -68,6 +78,7 @@ class Menu extends Component {
             <Toolbar>
                 {this.create_tlb_home(classes)}
                 <CategoryList classes={classes} />
+                {this.create_tlb_authors(classes)}
                 <div className={classes.grow} />
                 {this.create_tlb_user()}
                 {this.create_tlb_loginout()}

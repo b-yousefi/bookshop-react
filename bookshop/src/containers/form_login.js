@@ -99,7 +99,7 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <PopperBtn btnName="Login" placement='bottom-end' icon="sign-in-alt">
+            <PopperBtn btnName="Login" placement='bottom-end' icon="sign-in-alt" open={false}>
                 {this.create_form()}
             </PopperBtn>
         );

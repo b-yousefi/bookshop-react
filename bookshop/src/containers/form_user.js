@@ -21,11 +21,6 @@ class UserForm extends Component {
         if (this.props.user.isLoggedIn) {
             this.props.fetchUser(this.props.user.username);
         }
-        this.setState({ loading: false })
-    }
-
-    componentWillUnmount() {
-        this.setState({ loading: true })
     }
 
     validate = values => {

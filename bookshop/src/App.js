@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter } from 'react-router-dom';
+import {
+  Route,
+  BrowserRouter,
+} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import {
@@ -9,15 +14,18 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 
 import {
-  Grid,
+  Container,
 } from '@material-ui/core';
 
 
 import './App.css';
 import Content from './containers/Home';
 import Menu from './containers/menu';
-import UserForm from './containers/form_user'
+import UserForm from './containers/form_user';
+import CategoryListContent from './containers/content_CategoryList';
+import AuthorList from './containers/list_authors';
 import TransitionAlerts from './components/TransitionAlerts';
+import { clearNotif } from './actions/actions';
 
 library.add(fab, faCheckSquare, faCoffee, faStar, faEdit, faTrash, faFilm, faBook, faBookOpen,
   faSignInAlt, faUser, faSignOutAlt, faChevronLeft, faBars, faEye, faEyeSlash, faTimes)
@@ -26,6 +34,7 @@ library.add(fab, faCheckSquare, faCoffee, faStar, faEdit, faTrash, faFilm, faBoo
 
 const useStyles = theme => ({
   root: {
+    width: "100%"
   },
   heading: {
     fontSize: "1rem",
@@ -42,8 +51,7 @@ class App extends Component {
   };
 
   create_notifiaction_bar() {
-    return(
-
+    return (
       this.props.notification ?
         <TransitionAlerts title={this.props.notification.message ? this.props.notification.message : 'error'}
           message={this.props.notification.errors ?
@@ -74,15 +82,13 @@ class App extends Component {
             </h1>
           </div>
           <Menu />
-          <Grid container justify="center" alignItems="center">
-            <Grid item xs={12} >
-              {this.create_notifiaction_bar()}
-            </Grid>
-            <Grid item md={8} >
-              <Route path="/" component={Content} exact={true} />
-              <Route path="/user" component={UserForm} exact={true} />
-            </Grid>
-          </Grid>
+          {this.create_notifiaction_bar()}
+          <Container style={{ marginTop: 24 }} maxWidth={false}>
+            <Route path="/" component={Content} exact={true} />
+            <Route path="/authors" component={AuthorList} />
+            <Route path="/user" component={UserForm} exact={true} />
+            <Route path="/categories/:id" component={CategoryListContent} />
+          </Container>
 
         </div>
       </BrowserRouter>
@@ -91,4 +97,14 @@ class App extends Component {
   }
 }
 
-export default withStyles(useStyles)(App);
+function mapStateToProps(state) {
+  return {
+    notification: state.notification,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ clearNotif }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(App));

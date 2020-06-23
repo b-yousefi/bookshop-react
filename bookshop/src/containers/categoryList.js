@@ -8,6 +8,7 @@ import {
     List,
     ListSubheader
 } from '@material-ui/core';
+import { NavLink } from 'react-router-dom';
 
 import SubCategory from '../components/subCategoryList';
 import { fetchCategories } from '../actions/actions_categories';
@@ -16,8 +17,16 @@ import PopperBtn from '../components/popper_button';
 
 class CategoryList extends Component {
 
+    state = {
+        popper_open: false
+    }
+
     componentDidMount() {
         this.props.fetchCategories();
+    }
+
+    onListItemClicked = () => {
+        this.setState({ popper_open: false });
     }
 
     create_category(category, i) {
@@ -28,13 +37,23 @@ class CategoryList extends Component {
                     <List
                         aria-labelledby="nested-list-subheader"
                         subheader={
-                            <ListSubheader component="div" id="nested-list-subheader">
+                            <ListSubheader className={classes.button} component={NavLink}
+                                to={{
+                                    pathname: `/categories/${category.id}`,
+                                    state: {
+                                        categoryId: category.id
+                                    }
+                                }}
+                                style={{ textDecoration: "none" }}
+                                id="nested-list-subheader"
+                                onClick={this.onListItemClicked} >
                                 {category.name}
+
                             </ListSubheader>
                         }
                         className={classes.root} >
                         <Divider />
-                        <SubCategory category={category} />
+                        <SubCategory category={category} onClick={this.onListItemClicked} />
                     </List>
                 </Paper>
             </Grid>
@@ -44,7 +63,7 @@ class CategoryList extends Component {
     render() {
         //React.forwardRef
         const FancyButton = React.forwardRef((props, ref) => (
-            <PopperBtn ref={ref} btnName="Categories" placement='bottom-start'>
+            <PopperBtn ref={ref} btnName="Categories" placement='bottom-start' open={this.state.popper_open}>
                 {props.children}
             </PopperBtn>
         ));
