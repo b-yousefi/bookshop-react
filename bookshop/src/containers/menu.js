@@ -23,10 +23,9 @@ class Menu extends Component {
         this.props.logoutUser();
     }
 
-    create_tlb_home(classes) {
+    create_tlb_home() {
         return (
             <Button color="inherit"
-                className={classes.button}
                 component={NavLink} to="/"
                 startIcon={<FontAwesomeIcon icon="book-open" />} >
                 Bookshop
@@ -61,12 +60,20 @@ class Menu extends Component {
         )
     }
 
-    create_tlb_authors(classes) {
+    create_tlb_authors() {
         return (
             <Button color="inherit"
-                className={classes.button}
                 component={NavLink} to="/authors">
                 Authors
+            </Button>
+        )
+    }
+
+    create_tlb_publications() {
+        return (
+            <Button color="inherit"
+                component={NavLink} to="/publications">
+                Publications
             </Button>
         )
     }
@@ -76,9 +83,10 @@ class Menu extends Component {
 
         return (
             <Toolbar>
-                {this.create_tlb_home(classes)}
+                {this.create_tlb_home()}
                 <CategoryList classes={classes} />
-                {this.create_tlb_authors(classes)}
+                {this.create_tlb_authors()}
+                {this.create_tlb_publications()}
                 <div className={classes.grow} />
                 {this.create_tlb_user()}
                 {this.create_tlb_loginout()}

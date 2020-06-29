@@ -17,6 +17,11 @@ let initialState = {
     isLoggedIn: false
   },
   notification: null,
+  filter: {
+    publicationIds: [],
+    categoryIds: [],
+    authorIds: []
+  }
 };
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -28,7 +33,7 @@ const store = applyMiddleware(ReduxPromise, ReduxThunk,)(createStore);
 const routing = (
 
   <Provider store={store(RootReducer, initialState)}>
-    <App/>
+    <App />
   </Provider>
 )
 

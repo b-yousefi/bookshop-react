@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import {
     Grid,
     CardMedia,
@@ -10,7 +9,6 @@ import {
 } from '@material-ui/core';
 
 import { makeGetAuthor } from '../reducers/selectors';
-import { fetchAuthors } from '../actions/action_authors';
 
 class AuthorContent extends Component {
 
@@ -58,16 +56,9 @@ class AuthorContent extends Component {
 
 function mapStateToProps(state, props) {
     const getAuthor = makeGetAuthor();
-
-
     return {
-        author: getAuthor(state, props.location.state.authorId),
-        authors: state.authors
+        author: getAuthor(state, props.match.params.id)
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchAuthors }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AuthorContent);
+export default connect(mapStateToProps, null)(AuthorContent);

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Route,
   BrowserRouter,
+  Redirect,
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,7 +10,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import {
   faCheckSquare, faCoffee, faStar, faEdit, faTrash, faFilm, faBook, faBookOpen,
-  faSignInAlt, faUser, faSignOutAlt, faChevronLeft, faBars, faEye, faEyeSlash, faTimes
+  faSignInAlt, faUser, faSignOutAlt, faChevronLeft, faBars, faEye, faEyeSlash, faTimes, faLink
 } from '@fortawesome/free-solid-svg-icons';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -19,16 +20,20 @@ import {
 
 
 import './App.css';
-import Content from './containers/Home';
+import BookList from './containers/list_books';
 import Menu from './containers/menu';
 import UserForm from './containers/form_user';
 import CategoryListContent from './containers/content_CategoryList';
 import AuthorList from './containers/list_authors';
+import PublicationList from '././containers/list_publication'
 import TransitionAlerts from './components/TransitionAlerts';
+
 import { clearNotif } from './actions/actions';
+import { fetchAuthors } from './actions/action_authors';
+import { fetchPublications } from './actions/actions_publicaion';
 
 library.add(fab, faCheckSquare, faCoffee, faStar, faEdit, faTrash, faFilm, faBook, faBookOpen,
-  faSignInAlt, faUser, faSignOutAlt, faChevronLeft, faBars, faEye, faEyeSlash, faTimes)
+  faSignInAlt, faUser, faSignOutAlt, faChevronLeft, faBars, faEye, faEyeSlash, faTimes, faLink)
 
 
 
@@ -50,6 +55,11 @@ class App extends Component {
     UserProfile: 'User'
   };
 
+  componentDidMount() {
+    this.props.fetchPublications();
+    this.props.fetchAuthors();
+  }
+
   create_notifiaction_bar() {
     return (
       this.props.notification ?
@@ -61,7 +71,7 @@ class App extends Component {
                   {error.error}
                   <br />
                 </div>)
-            }) : 'Some error occurred!!!!'
+            }) : ''
           }
           severity={this.props.notification.severity} open={this.props.notification !== null}
           onClick={() => {
@@ -77,15 +87,25 @@ class App extends Component {
         <div container="true" className={this.props.classes.root}>
 
           <div>
-            <h1 className="darkblue">
+            <h4 className="darkblue">
               <span>This is just a sample website view source code at <a href="https://github.com/b-yousefi/SampleProject">github</a> </span>
-            </h1>
+            </h4>
           </div>
           <Menu />
           {this.create_notifiaction_bar()}
           <Container style={{ marginTop: 24 }} maxWidth={false}>
-            <Route path="/" component={Content} exact={true} />
+            <Route
+              exact
+              path="/"
+              render={() => {
+                return (
+                  <Redirect to="/books" />
+                )
+              }}
+            />
+            <Route path="/books" component={BookList} />
             <Route path="/authors" component={AuthorList} />
+            <Route path="/publications" component={PublicationList} />
             <Route path="/user" component={UserForm} exact={true} />
             <Route path="/categories/:id" component={CategoryListContent} />
           </Container>
@@ -104,7 +124,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ clearNotif }, dispatch);
+  return bindActionCreators({ clearNotif, fetchAuthors, fetchPublications }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(App));

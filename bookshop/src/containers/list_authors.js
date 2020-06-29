@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import {
     Grid,
@@ -16,15 +15,9 @@ import {
     Switch,
 } from 'react-router-dom';
 
-import { fetchAuthors } from '../actions/action_authors';
 import AuthorContent from './content_author';
 
 class AuthorList extends Component {
-
-
-    componentDidMount() {
-        this.props.fetchAuthors();
-    }
 
     getDateString(str) {
         var date = new Date(str.substring(0, 10));
@@ -34,11 +27,11 @@ class AuthorList extends Component {
 
     create_item(key, author, classes) {
         return (
-            <Grid key={key} item xs={6} md={3} height="100%"  >
+            <Grid key={key} item xs={4} md={3} height="100%"  >
                 <Card className={classes.mediaroot}>
                     <CardActionArea component={Link}
                         to={{
-                            pathname: `/authors/${key}`,
+                            pathname: `${this.props.match.url}/${key}`,
                             state: {
                                 authorId: key
                             }
@@ -72,9 +65,9 @@ class AuthorList extends Component {
 
         return (
             <Grid container spacing={1} >
-                <Grid item xs={4} md={2}>
+                <Grid item md={2}>
                 </Grid>
-                <Grid container item xs={6} md={8} spacing={2} >
+                <Grid container item xs={12} md={8} spacing={2} >
                     <Switch>
                         <Route exact path={`${this.props.match.url}`}>
                             {[...authors.keys()].map(key => {
@@ -96,10 +89,6 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchAuthors }, dispatch);
-}
-
 const useStyles = theme => ({
     root: {
         display: 'flex',
@@ -115,4 +104,4 @@ const useStyles = theme => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AuthorList));
+export default connect(mapStateToProps, null)(withStyles(useStyles)(AuthorList));
