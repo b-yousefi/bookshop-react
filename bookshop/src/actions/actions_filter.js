@@ -1,15 +1,16 @@
 export const FILTER_ACTIONS = {
-    SET: 'FILTER_SET', CLEAR: 'FILTER_CLEAR',
+    SET: 'FILTER_SET',
+    CLEAR: 'FILTER_CLEAR',
+    SET_AUTHORS: 'FILTER_AUTHORS',
+    SET_CATEGORIES: 'FILTER_CATEGORIES',
+    SET_PUBLICATIONS: 'FILTER_PUBLICATIONS',
 };
 
-export function setFilter(publicationIds, categoryIds, authorIds) {
+export function setFilter(filter) {
+    filter.refresh = true;
     return {
         type: FILTER_ACTIONS.SET,
-        data: {
-            publicationIds,
-            categoryIds,
-            authorIds
-        }
+        data: filter,
     }
 }
 

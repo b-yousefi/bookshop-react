@@ -4,8 +4,11 @@ import { setError } from './actions';
 const PUBLICATION_URL = `${process.env.REACT_APP_API_URL}/api/publications`;
 
 export const PUBLICATION_ACTIONS = {
-    FETCH: 'PUBLICATION_FETCH', UPDATE: 'PUBLICATION_UPDATE',
-    DELETE: 'PUBLICATION_DELETE', CREATE: 'PUBLICATION_CREATE'
+    FETCH: 'PUBLICATION_FETCH',
+    UPDATE: 'PUBLICATION_UPDATE',
+    DELETE: 'PUBLICATION_DELETE',
+    CREATE: 'PUBLICATION_CREATE',
+    SELECT: 'PUBLICATION_SELECT',
 };
 
 export function fetchPublications() {
@@ -23,5 +26,12 @@ export function fetchPublications() {
                     setError(error.response.data, PUBLICATION_ACTIONS.FETCH)
                 );
             })
+    }
+}
+
+export function selectPublication(selected_publication) {
+    return {
+        type: PUBLICATION_ACTIONS.SELECT,
+        publication: selected_publication
     }
 }

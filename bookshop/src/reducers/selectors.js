@@ -35,3 +35,15 @@ export const makeGetBook = () => {
         }
     )
 }
+
+const getPublicationById = (state, publicationId) => state.publications ?
+    state.publications.get(publicationId) : undefined;
+
+export const makeGetPublication = () => {
+    return createSelector(
+        [getPublicationById],
+        (publication) => {
+            return publication;
+        }
+    )
+}

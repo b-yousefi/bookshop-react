@@ -20,7 +20,9 @@ import {
 
 
 import './App.css';
+import Home from './containers/home';
 import BookList from './containers/list_books';
+import BookContent from './containers/content_book';
 import Menu from './containers/menu';
 import UserForm from './containers/form_user';
 import CategoryListContent from './containers/content_CategoryList';
@@ -99,11 +101,13 @@ class App extends Component {
               path="/"
               render={() => {
                 return (
-                  <Redirect to="/books" />
+                  <Redirect to="/home" />
                 )
               }}
             />
-            <Route path="/books" component={BookList} />
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/books" component={BookList} />
+            <Route exact path="/books/:id" component={BookContent} />
             <Route path="/authors" component={AuthorList} />
             <Route path="/publications" component={PublicationList} />
             <Route path="/user" component={UserForm} exact={true} />
@@ -120,6 +124,7 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     notification: state.notification,
+    filter: state.filter
   }
 }
 

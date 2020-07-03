@@ -7,6 +7,9 @@ import { AuthorsReducer } from './reducer_authors';
 import { PublicationReducer } from './reducer_publications';
 import { BooksReducer } from './reducer_books';
 import { FilterReducer } from './reducer_filter';
+import { SelectedAuthorReducer } from './reducer_selected_author';
+import { SelectedCategoryReducer } from './reducer_selected_category';
+import { SelectedPublicationReducer } from './reducer_selected_publication';
 
 const RootReducer = combineReducers(
     {
@@ -18,6 +21,9 @@ const RootReducer = combineReducers(
         publications: PublicationReducer,
         books: BooksReducer,
         filter: FilterReducer,
+        selected_author: SelectedAuthorReducer,
+        selected_category: SelectedCategoryReducer,
+        selected_publication: SelectedPublicationReducer,
     }
 )
 

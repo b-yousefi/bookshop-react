@@ -14,9 +14,6 @@ class CategoryLink extends Component {
             <Link color="inherit" component={NavLink}
                 to={{
                     pathname: `/categories/${this.props.category.id}`,
-                    state: {
-                        categoryId: this.props.category.id
-                    }
                 }}  >
                 {this.props.category.name}
             </Link>

@@ -8,7 +8,8 @@ export function BooksReducer(state = null, action) {
             if (action.payload.data._embedded && action.payload.data._embedded.books) {
                 const books = action.payload.data._embedded.books;
                 const map = new Map(books.map(book => [book.id, book]));
-                return map;
+                const filter = action.filter;
+                return Object.assign(map, { filter: filter });
             } else {
                 return null;
             }

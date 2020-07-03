@@ -14,10 +14,14 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 
-import { fetchPublications } from '../actions/actions_publicaion';
+import { selectPublication } from '../actions/actions_publicaion';
 
 
 class PublicationList extends Component {
+
+    setPublication = (publication) => () => {
+        this.props.selectPublication(publication);
+    }
 
     create_item(key, publication) {
         return (
@@ -40,7 +44,7 @@ class PublicationList extends Component {
                         <Button size="medium" color="primary" component={NavLink} to="/authors">
                             Authors
                         </Button>
-                        <Button size="medium" color="primary">
+                        <Button size="medium" color="primary" component={NavLink} to="/home" onClick={this.setPublication(publication)}>
                             Books
                         </Button>
                     </CardActions>
@@ -75,7 +79,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchPublications }, dispatch);
+    return bindActionCreators({ selectPublication }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PublicationList);

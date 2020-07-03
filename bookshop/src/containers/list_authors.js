@@ -32,9 +32,6 @@ class AuthorList extends Component {
                     <CardActionArea component={Link}
                         to={{
                             pathname: `${this.props.match.url}/${key}`,
-                            state: {
-                                authorId: key
-                            }
                         }} style={{ height: "100%" }}>
                         <CardMedia
                             className={classes.media}
@@ -65,19 +62,20 @@ class AuthorList extends Component {
 
         return (
             <Grid container spacing={1} >
-                <Grid item md={2}>
-                </Grid>
-                <Grid container item xs={12} md={8} spacing={2} >
-                    <Switch>
-                        <Route exact path={`${this.props.match.url}`}>
+                <Switch>
+                    <Route exact path={`${this.props.match.url}`}>
+                        <Grid item md={2}>
+                        </Grid>
+                        <Grid container item xs={12} md={8} spacing={2} >
                             {[...authors.keys()].map(key => {
                                 return this.create_item(key, authors.get(key), classes)
                             }
                             )}
-                        </Route>
-                        <Route exact path={`${this.props.match.url}/:id`} component={AuthorContent} />
-                    </Switch>
-                </Grid>
+                        </Grid>
+                    </Route>
+                    <Route exact path={`${this.props.match.url}/:id`} component={AuthorContent} />
+                </Switch>
+
             </Grid>
         )
     }
