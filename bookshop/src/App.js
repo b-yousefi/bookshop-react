@@ -29,6 +29,7 @@ import CategoryListContent from './containers/content_CategoryList';
 import AuthorList from './containers/list_authors';
 import PublicationList from '././containers/list_publication'
 import TransitionAlerts from './components/TransitionAlerts';
+import LoginForm from './containers/form_login';
 
 import { clearNotif } from './actions/actions';
 import { fetchAuthors } from './actions/action_authors';
@@ -88,11 +89,11 @@ class App extends Component {
       <BrowserRouter>
         <div container="true" className={this.props.classes.root}>
 
-          <div>
+          {/* <div>
             <h4 className="darkblue">
               <span>This is just a sample website view source code at <a href="https://github.com/b-yousefi/SampleProject">github</a> </span>
             </h4>
-          </div>
+          </div> */}
           <Menu />
           {this.create_notifiaction_bar()}
           <Container style={{ marginTop: 24 }} maxWidth={false}>
@@ -112,6 +113,7 @@ class App extends Component {
             <Route path="/publications" component={PublicationList} />
             <Route path="/user" component={UserForm} exact={true} />
             <Route path="/categories/:id" component={CategoryListContent} />
+            <Route path="/login" component={LoginForm} />
           </Container>
 
         </div>

@@ -25,6 +25,7 @@ export default function PhoneNumberControl(props) {
                 value={value}
                 onChange={onChange}
                 style={{ marginTop: 20 }}
+                inputStyle={{ width: 'auto' }}
             />
         </div>
     );

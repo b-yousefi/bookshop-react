@@ -8,16 +8,22 @@ import {
     IconButton,
     Button,
     Toolbar,
+    Hidden
 } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 import { withStyles } from '@material-ui/core/styles';
 
-import CategoryList from './categoryList';
-import LoginForm from './form_login';
+import PopperCategoryList from './popper_list_categories';
+import PopperLoginForm from '../components/popper_form_login';
+import DrawerMenuXS from './drawer_menu_xs';
 
 import { logoutUser } from '../actions/actions_user';
 
 
 class Menu extends Component {
+    state = {
+        drawer_open: false,
+    }
 
     onLogout = () => {
         this.props.logoutUser();
@@ -56,7 +62,21 @@ class Menu extends Component {
                     <FontAwesomeIcon icon="sign-out-alt" />
                 </IconButton>
                 :
-                <LoginForm />
+                <div>
+                    <Hidden smUp>
+                        <IconButton
+                            aria-label="login"
+                            component={NavLink} to="/login"
+                            color="inherit"
+                        >
+                            <FontAwesomeIcon icon="sign-in-alt" />
+                        </IconButton>
+                    </Hidden>
+                    <Hidden xsDown>
+                        <PopperLoginForm />
+                    </Hidden>
+                </div>
+
         )
     }
 
@@ -83,10 +103,18 @@ class Menu extends Component {
 
         return (
             <Toolbar>
-                {this.create_tlb_home()}
-                <CategoryList classes={classes} />
-                {this.create_tlb_authors()}
-                {this.create_tlb_publications()}
+                <Hidden smUp>
+                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
+                        onClick={this.toggleDrawer(true)}>
+                        <MenuIcon />
+                    </IconButton>
+                </Hidden>
+                <Hidden xsDown>
+                    {this.create_tlb_home()}
+                    <PopperCategoryList classes={classes} />
+                    {this.create_tlb_authors()}
+                    {this.create_tlb_publications()}
+                </Hidden>
                 <div className={classes.grow} />
                 {this.create_tlb_user()}
                 {this.create_tlb_loginout()}
@@ -94,11 +122,24 @@ class Menu extends Component {
         )
     }
 
+    toggleDrawer = (open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+
+        this.setState({ drawer_open: open });
+    };
+
     render() {
         return (
-            <AppBar position="sticky" >
-                {this.create_toolbar()}
-            </AppBar>
+            <React.Fragment>
+                <AppBar position="sticky" >
+                    {this.create_toolbar()}
+                </AppBar>
+                <Hidden mdUp>
+                    <DrawerMenuXS drawer_open={this.state.drawer_open} toggleDrawer={this.toggleDrawer} />
+                </Hidden>
+            </React.Fragment>
         );
     }
 }

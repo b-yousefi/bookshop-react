@@ -15,7 +15,7 @@ import { fetchCategories } from '../actions/actions_categories';
 
 import PopperBtn from '../components/popper_button';
 
-class CategoryList extends Component {
+class PopperCategoryList extends Component {
 
     state = {
         popper_open: false
@@ -40,9 +40,6 @@ class CategoryList extends Component {
                             <ListSubheader className={classes.button} component={NavLink}
                                 to={{
                                     pathname: `/categories/${category.id}`,
-                                    state: {
-                                        categoryId: category.id
-                                    }
                                 }}
                                 style={{ textDecoration: "none" }}
                                 id="nested-list-subheader"
@@ -97,4 +94,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ fetchCategories }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);
+export default connect(mapStateToProps, mapDispatchToProps)(PopperCategoryList);

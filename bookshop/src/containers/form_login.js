@@ -6,11 +6,12 @@ import {
     Grid,
     TextField,
     Button,
+    Paper,
+    Box,
 } from '@material-ui/core'
 
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
-import PopperBtn from '../components/popper_button';
 import PasswordControl from '../components/form/control_password';
 
 
@@ -66,10 +67,9 @@ class LoginForm extends Component {
         }
     }
 
-    create_form() {
-        const { classes } = this.props;
+    create_form(classes) {
         return (
-            <form noValidate autoComplete="off" action="/" method="POST" onSubmit={this.onSubmitClicked} className={classes.root}>
+            <form noValidate autoComplete="off" action="/" method="POST" onSubmit={this.onSubmitClicked} >
                 <Grid container  >
                     <Grid item xs={12} container justify="center" alignItems="center">
                         <TextField
@@ -98,10 +98,13 @@ class LoginForm extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         return (
-            <PopperBtn btnName="Login" placement='bottom-end' icon="sign-in-alt" open={false}>
-                {this.create_form()}
-            </PopperBtn>
+            <Box display="flex" justifyContent="center">
+                <Paper className={classes.root} >
+                    {this.create_form(classes)}
+                </Paper>
+            </Box>
         );
     }
 }
