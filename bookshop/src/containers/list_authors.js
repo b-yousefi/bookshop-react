@@ -8,6 +8,7 @@ import {
     CardMedia,
     CardContent,
     Typography,
+    Box,
 } from '@material-ui/core';
 import {
     Link,
@@ -28,25 +29,32 @@ class AuthorList extends Component {
     create_item(key, author, classes) {
         return (
             <Grid key={key} item xs={4} md={3} height="100%"  >
-                <Card className={classes.mediaroot}>
+                <Card className={classes.mediaroot} >
                     <CardActionArea component={Link}
                         to={{
                             pathname: `${this.props.match.url}/${key}`,
-                        }} style={{ height: "100%" }}>
-                        <CardMedia
-                            className={classes.media}
-                            image={`data:image/jpeg;base64,${author.picture.data}`}
-                            title={author.fullName}
-                        />
-                        <CardContent component="div" style={{ height: "100%" }}>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                {author.fullName}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="h5">
-                                Born: {author.birthday ? this.getDateString(author.birthday) : ""}
-                            </Typography>
-                        </CardContent>
+                        }} >
+                        <Box display="flex" flexDirection="column" height="100%" >
+                            <CardMedia
+                                className={classes.media}
+                                image={`data:image/jpeg;base64,${author.picture.data}`}
+                                title={author.fullName}
+                            />
+                            <Box display="flex" flexDirection="column" height="100%" p={2}>
+                                <Box flexGrow={1} >
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        {author.fullName}
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="body2" color="textSecondary" component="h5">
+                                        Born: {author.birthday ? this.getDateString(author.birthday) : ""}
+                                    </Typography>
+                                </Box>
+                            </Box>
+                        </Box>
                     </CardActionArea>
+
                 </Card>
             </Grid>
         );
@@ -94,7 +102,14 @@ const useStyles = theme => ({
         flexGrow: 1,
     },
     mediaroot: {
-        height: "100%"
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    cardContent: {
+        display: 'flex',
+        // flexDirection: 'column',
+        height: '100%',
     },
     media: {
         height: 0,

@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import {createSelector} from 'reselect';
 
 const getByCategoryById = (state, categoryId) => state.categories_flat ?
     state.categories_flat[categoryId] : undefined;
@@ -46,4 +46,14 @@ export const makeGetPublication = () => {
             return publication;
         }
     )
+}
+
+export const getShoppingCartItemsCount = (state) => state.shopping_cart ?
+    state.shopping_cart.orderItems.length : 0;
+
+export const getBooksInShoppingCart = (state) => {
+    if (state.shopping_cart) {
+        return state.shopping_cart.booksMap;
+    } else
+        return null;
 }

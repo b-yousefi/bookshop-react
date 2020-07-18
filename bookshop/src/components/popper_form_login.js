@@ -5,9 +5,9 @@ import LoginForm from '../containers/form_login';
 
 export default function PopperLoginForm() {
     return (
-        <PopperBtn btnName="Login" placement='bottom-end' icon="sign-in-alt" open={false}>
+        <PopperBtn tooltip="Login" btnName="Login" placement='bottom-end' icon="sign-in-alt" open={false}>
             <div>
-                <LoginForm />
+                <LoginForm/>
             </div>
         </PopperBtn>
     );

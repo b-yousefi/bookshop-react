@@ -1,17 +1,13 @@
-import React, { Component } from 'react';
-import { updateUser, regsiterUser, fetchUser } from '../actions/actions_user';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Form, Field } from 'react-final-form';
-import {
-    TextField,
-} from 'final-form-material-ui';
-import {
-    Paper,
-    Grid,
-    Button,
-} from '@material-ui/core';
+import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {Field, Form} from 'react-final-form';
+import {TextField,} from 'final-form-material-ui';
+import {Button, Grid, Paper,} from '@material-ui/core';
 
+import {fetchUser, regsiterUser, updateUser, USER_ACTIONS} from '../actions/actions_user';
+import {COMMON} from '../actions/actions';
 import PasswordControl from '../components/form/control_password';
 import PhoneNumberControl from '../components/form/control_phone_number';
 
@@ -52,7 +48,7 @@ class UserForm extends Component {
 
     onSubmit = async values => {
         if (this.props.user.isLoggedIn) {
-            this.props.updateUser({ ...values, link: this.props.user._links.self.href });
+            this.props.updateUser({...values, link: this.props.user._links.self.href});
         } else {
             this.props.regsiterUser(values);
         }
@@ -60,16 +56,20 @@ class UserForm extends Component {
 
 
     render() {
+        const notif = this.props.notification;
+        if (notif && notif.cause === USER_ACTIONS.REGISTER && notif.severity === COMMON.SUCCESS) {
+            return <Redirect to="/"/>
+        }
         return (
-            <div style={{ padding: 16, margin: 'auto', maxWidth: 450 }}>
+            <div style={{padding: 16, margin: 'auto', maxWidth: 450}}>
                 <Form
                     width="50px"
                     onSubmit={this.onSubmit}
                     initialValues={this.props.user ? this.props.user : {}}
                     validate={this.validate}
-                    render={({ handleSubmit, reset, submitting, pristine, values }) => (
+                    render={({handleSubmit, reset, submitting, pristine, values}) => (
                         <form onSubmit={handleSubmit} noValidate>
-                            <Paper style={{ padding: 16 }}>
+                            <Paper style={{padding: 16}}>
 
                                 <Grid container alignItems="flex-start" spacing={2}>
                                     <Grid item xs={12}>
@@ -113,7 +113,7 @@ class UserForm extends Component {
                                     <Grid item xs={12}>
                                         <Field
                                             fullWidth
-                                            name="phoneNumber" >
+                                            name="phoneNumber">
                                             {props => (
                                                 <PhoneNumberControl
                                                     required
@@ -160,7 +160,7 @@ class UserForm extends Component {
                                             }
                                         </Field>
                                     </Grid>
-                                    <Grid item xs={6} >
+                                    <Grid item xs={6}>
                                         <Button
                                             variant="contained"
                                             color="primary"
@@ -183,12 +183,13 @@ class UserForm extends Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user,
+        notification: state.notification,
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchUser, updateUser, regsiterUser }, dispatch);
+    return bindActionCreators({fetchUser, updateUser, regsiterUser}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserForm);

@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { setSucc, setError } from '../actions/actions';
+import {setError, setSucc} from './actions';
+import {fetchShoppingCart} from './actions_shopping_cart';
+
 const USER_URL = `${process.env.REACT_APP_API_URL}/api/users`;
 
 export const USER_ACTIONS = {
@@ -31,6 +33,7 @@ export function loginUser(credentials) {
             }
         ).then((response) => {
             axios.defaults.headers.common['Authorization'] = `Token ${response.data.token}`;
+            dispatch(fetchShoppingCart(credentials.username));
             dispatch(
                 {
                     type: USER_ACTIONS.LOGIN,
@@ -62,7 +65,8 @@ export function regsiterUser(user) {
                 dispatch(setSucc({
                     type: USER_ACTIONS.REGISTER,
                     payload: response.data
-                }))
+                }));
+                dispatch(loginUser({username: user.username, password:user.password}));
             })
             .catch(error => {
                 dispatch(
