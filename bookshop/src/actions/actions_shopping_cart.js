@@ -7,9 +7,7 @@ const ORDER_ITEMS_URL = `${process.env.REACT_APP_API_URL}/api/order_items`;
 export const SHOPPING_CART_ACTIONS = {
     FETCH: 'SHOPPING_CART_FETCH',
     UPDATE: 'SHOPPING_CART_UPDATE',
-    UPDATE_ITEM: 'SHOPPING_CART_UPDATE_ITEM',
-    REMOVE_ITEM: 'SHOPPING_CART_REMOVE_ITEM',
-    ADD_ITEM: 'SHOPPING_CART_ADD_ITEM',
+    CLEAR: 'SHOPPING_CART_CLEAR',
 };
 
 export function fetchShoppingCart(username) {
@@ -31,60 +29,36 @@ export function fetchShoppingCart(username) {
     }
 }
 
-function getOrderItem(shopping_cart, book, quantity) {
-    let orderItemId = null;
-    if (shopping_cart.booksMap.has(book.id)) {
-        orderItemId = shopping_cart.booksMap.get(book.id).orderItemId;
-    }
+export function clearShoppingCart() {
     return {
-        id: orderItemId,
-        book: book._links.self.href,
-        quantity,
-        order: shopping_cart._links.self.href
-    };
-}
-
-export function addBookToShoppingCart(book, quantity) {
-    return (dispatch, getState) => {
-        const orderItem = getOrderItem(getState().shopping_cart, book, quantity);
-        const username = getState().user.username;
-        const url = `${ORDER_ITEMS_URL}/add_book_to_shopping_cart`;
-
-        axios.post(url, JSON.stringify(orderItem))
-            .then(response => {
-                dispatch(setSucc({
-                    type: SHOPPING_CART_ACTIONS.ADD_ITEM,
-                    payload: response,
-                    orderItem: orderItem
-                }));
-                dispatch(fetchShoppingCart(username));
-            })
-            .catch(error => {
-                dispatch(
-                    setError(error.response.data, SHOPPING_CART_ACTIONS.ADD_ITEM)
-                );
-            });
+        type: SHOPPING_CART_ACTIONS.CLEAR,
     }
 }
 
-export function removeBookFromShoppingCart(book, quantity) {
+export function updateShoppingCart(book, quantity) {
     return (dispatch, getState) => {
-        const orderItem = getOrderItem(getState().shopping_cart, book, quantity);
-        const username = getState().user.username;
-        const url = `${ORDER_ITEMS_URL}/remove_book_from_shopping_cart`;
+        let orderItemId = null;
+        if (getState().shopping_cart.booksMap.has(book.id)) {
+            orderItemId = getState().shopping_cart.booksMap.get(book.id).orderItemId;
+        }
+        const orderItem = {
+            id: orderItemId,
+            book: book._links.self.href,
+            quantity,
+            order: getState().shopping_cart._links.self.href
+        };
+        const url = `${ORDER_ITEMS_URL}/update_shopping_cart`;
 
         axios.post(url, JSON.stringify(orderItem))
             .then(response => {
                 dispatch(setSucc({
-                    type: SHOPPING_CART_ACTIONS.REMOVE_ITEM,
-                    payload: response,
-                    orderItem: orderItem
+                    type: SHOPPING_CART_ACTIONS.UPDATE,
+                    payload: response
                 }));
-                dispatch(fetchShoppingCart(username));
             })
             .catch(error => {
                 dispatch(
-                    setError(error.response.data, SHOPPING_CART_ACTIONS.REMOVE_ITEM)
+                    setError(error.response.data, SHOPPING_CART_ACTIONS.UPDATE)
                 );
             });
     }

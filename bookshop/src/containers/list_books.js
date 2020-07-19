@@ -19,7 +19,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import {Link,} from 'react-router-dom';
 
-import {addBookToShoppingCart, removeBookFromShoppingCart} from '../actions/actions_shopping_cart';
+import {updateShoppingCart} from '../actions/actions_shopping_cart';
 import SignInAlertDialog from '../components/dialog_signin';
 import {getBooksInShoppingCart} from "../reducers/selectors";
 
@@ -29,16 +29,16 @@ class BooKList extends Component {
         open_signIn: false,
     }
 
-    addToCartClicked = (book) => () => {
+    addToCartClicked = (book, quantity) => () => {
         if (this.props.user.isLoggedIn) {
-            this.props.addBookToShoppingCart(book, 1);
+            this.props.updateShoppingCart(book, quantity);
         } else {
             this.setState({open_signIn: true});
         }
     }
 
-    removeFromCartClicked = (book) => () => {
-        this.props.removeBookFromShoppingCart(book, 1);
+    removeFromCartClicked = (book, quantity) => () => {
+        this.props.updateShoppingCart(book, quantity);
     }
 
     create_item(key, book) {
@@ -75,12 +75,12 @@ class BooKList extends Component {
                                 </Typography>
                             </Box>
                             <Box>
-                                {/* todo: if already exist show the remove button */}
                                 <Tooltip title="Remove from shopping cart" aria-label="remove from shopping cart">
                                     <span>
                                         <IconButton aria-label="remove from shopping cart"
                                                     disabled={book_order_count === 0}
-                                                    onClick={this.removeFromCartClicked(book)}>
+                                                    onClick={this.removeFromCartClicked(book, book_order_count -
+                                                        1)}>
                                             <RemoveShoppingCartIcon/>
                                         </IconButton>
                                     </span>
@@ -88,7 +88,7 @@ class BooKList extends Component {
                                 <Tooltip title="Add to shopping cart" aria-label="add to shopping cart">
                                     <span>
                                         <IconButton aria-label="add to shopping cart" disabled={book.quantity === 0}
-                                                    onClick={this.addToCartClicked(book)}>
+                                                    onClick={this.addToCartClicked(book, book_order_count + 1)}>
                                             <Badge badgeContent={book_order_count} color="secondary">
                                                 <AddShoppingCartIcon/>
                                             </Badge>
@@ -156,7 +156,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({addBookToShoppingCart, removeBookFromShoppingCart}, dispatch);
+    return bindActionCreators({updateShoppingCart}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(BooKList));

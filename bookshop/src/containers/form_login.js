@@ -1,24 +1,17 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { loginUser } from '../actions/actions_user'
-import {
-    Grid,
-    TextField,
-    Button,
-    Paper,
-    Box,
-} from '@material-ui/core'
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {loginUser} from '../actions/actions_user'
+import {Box, Button, Grid, Paper, TextField,} from '@material-ui/core'
 
 import clsx from 'clsx';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import PasswordControl from '../components/form/control_password';
 
 
 class LoginForm extends Component {
 
     state = {
-        open: false,
         placement: 'bottom-start',
         credentials: {
             username: '',
@@ -41,7 +34,7 @@ class LoginForm extends Component {
         if (cred[event.target.name] === "") {
             errors[event.target.name] = "Required";
         }
-        this.setState({ credentials: cred, errors });
+        this.setState({credentials: cred, errors});
     }
 
     validate = () => {
@@ -52,7 +45,7 @@ class LoginForm extends Component {
         if (this.state.credentials.password === "") {
             errors.password = "Required";
         }
-        this.setState({ errors });
+        this.setState({errors});
         return this.state.errors.username === null && this.state.errors.password === null;
     }
 
@@ -60,17 +53,15 @@ class LoginForm extends Component {
         event.preventDefault();
         if (this.validate()) {
             this.props.loginUser(this.state.credentials);
-            this.setState()
-        }
-        else {
+        } else {
 
         }
     }
 
     create_form(classes) {
         return (
-            <form noValidate autoComplete="off" action="/" method="POST" onSubmit={this.onSubmitClicked} >
-                <Grid container  >
+            <form noValidate autoComplete="off" action="/" method="POST" onSubmit={this.onSubmitClicked}>
+                <Grid container>
                     <Grid item xs={12} container justify="center" alignItems="center">
                         <TextField
                             onChange={this.inputChanged} value={this.state.credentials.username} name="username"
@@ -86,11 +77,14 @@ class LoginForm extends Component {
                             required
                         />
                     </Grid>
-                    <Grid item xs={12} style={{ margin: 8 }} container justify="center" alignItems="center">
-                        <PasswordControl error={this.state.errors && this.state.errors.password} name="password" required shrink={true} onChange={this.inputChanged} value={this.state.credentials.password} />
+                    <Grid item xs={12} style={{margin: 8}} container justify="center" alignItems="center">
+                        <PasswordControl error={this.state.errors && this.state.errors.password} name="password"
+                                         required shrink={true} onChange={this.inputChanged}
+                                         value={this.state.credentials.password}/>
                     </Grid>
-                    <Grid item xs={12} container justify="center" alignItems="center" >
-                        <Button variant="contained" type="submit" className={classes.submit} color="primary">Login</Button>
+                    <Grid item xs={12} container justify="center" alignItems="center">
+                        <Button variant="contained" type="submit" className={classes.submit}
+                                color="primary">Login</Button>
                     </Grid>
                 </Grid>
             </form>
@@ -98,10 +92,10 @@ class LoginForm extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         return (
             <Box display="flex" justifyContent="center">
-                <Paper className={classes.root} >
+                <Paper className={classes.root}>
                     {this.create_form(classes)}
                 </Paper>
             </Box>
@@ -110,7 +104,7 @@ class LoginForm extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ loginUser }, dispatch);
+    return bindActionCreators({loginUser}, dispatch);
 }
 
 const useStyles = (theme) => ({

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {setError, setSucc} from './actions';
-import {fetchShoppingCart} from './actions_shopping_cart';
+import {clearShoppingCart, fetchShoppingCart} from './actions_shopping_cart';
 
 const USER_URL = `${process.env.REACT_APP_API_URL}/api/users`;
 
@@ -12,6 +12,7 @@ export const USER_ACTIONS = {
     LOGIN: 'USER_LOGIN',
     LOGOUT: 'USER_LOGOUT'
 };
+
 export function fetchUser(username) {
     const url = `${USER_URL}/search/findUser?username=${username}`;
     const request = axios.get(url);
@@ -32,12 +33,13 @@ export function loginUser(credentials) {
                 data: JSON.stringify(credentials)
             }
         ).then((response) => {
-            axios.defaults.headers.common['Authorization'] = `Token ${response.data.token}`;
+            const token = `Token ${response.data.token}`;
+            axios.defaults.headers.common['Authorization'] = token;
             dispatch(fetchShoppingCart(credentials.username));
             dispatch(
                 {
                     type: USER_ACTIONS.LOGIN,
-                    payload: credentials.username,
+                    payload: {username: credentials.username, token},
                 }
             );
         }).catch(error => {
@@ -50,10 +52,12 @@ export function loginUser(credentials) {
 
 export function logoutUser() {
     delete axios.defaults.headers.common["Authorization"];
-
-    return {
-        type: USER_ACTIONS.LOGOUT,
-        payload: ''
+    return dispatch => {
+        dispatch({
+            type: USER_ACTIONS.LOGOUT,
+            payload: ''
+        });
+        dispatch(clearShoppingCart());
     }
 }
 
@@ -66,7 +70,7 @@ export function regsiterUser(user) {
                     type: USER_ACTIONS.REGISTER,
                     payload: response.data
                 }));
-                dispatch(loginUser({username: user.username, password:user.password}));
+                dispatch(loginUser({username: user.username, password: user.password}));
             })
             .catch(error => {
                 dispatch(

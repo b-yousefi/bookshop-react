@@ -24,8 +24,18 @@ export const makeGetAuthor = () => {
     )
 }
 
-const getBookById = (state, bookId) => state.books ?
-    state.books.get(bookId) : undefined;
+const getBookById = (state, bookId) => {
+    if (state.books) {
+        if (state.books.has(bookId)) {
+            return state.books.get(bookId);
+        }
+    }
+    const booksMap = getBooksInShoppingCart(state);
+    if (booksMap !== null && booksMap.has(bookId)) {
+        return booksMap.get(bookId).book;
+    }
+    return undefined;
+};
 
 export const makeGetBook = () => {
     return createSelector(
@@ -49,7 +59,7 @@ export const makeGetPublication = () => {
 }
 
 export const getShoppingCartItemsCount = (state) => state.shopping_cart ?
-    state.shopping_cart.orderItems.length : 0;
+    state.shopping_cart.orderItems.size : 0;
 
 export const getBooksInShoppingCart = (state) => {
     if (state.shopping_cart) {

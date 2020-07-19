@@ -3,9 +3,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {NavLink} from 'react-router-dom';
-import {AppBar, Badge, Button, Hidden, IconButton, Toolbar, Tooltip,} from '@material-ui/core';
+import {AppBar, Button, Hidden, IconButton, Toolbar, Tooltip,} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import {withStyles} from '@material-ui/core/styles';
 
@@ -15,6 +14,7 @@ import DrawerMenuXS from './drawer_menu_xs';
 
 import {logoutUser} from '../actions/actions_user';
 import {getShoppingCartItemsCount} from '../reducers/selectors';
+import PopperShoppingCart from "../components/popper_shopping_cart";
 
 
 class Menu extends Component {
@@ -52,13 +52,8 @@ class Menu extends Component {
 
     create_tlb_shoppingCart() {
         return (
-            //todo: read order items count 
             this.props.user.isLoggedIn ?
-                <IconButton color="inherit" aria-label="cart">
-                    <Badge badgeContent={this.props.order_items_count} color="secondary">
-                        <ShoppingCartIcon/>
-                    </Badge>
-                </IconButton>
+                <PopperShoppingCart badgeContent={this.props.order_items_count}/>
                 : ""
         )
     }
