@@ -58,7 +58,7 @@ class ShoppingCartItem extends Component {
                     {/*    onChange={this.onCountChanged}*/}
                     {/*    // helperText="Incorrect entry."*/}
                     {/*/>*/}
-                    <IconButton edge="end" aria-label="delete" onClick={this.deleteClicked(orderItem)}>
+                    <IconButton name="delete" edge="end" aria-label="delete" onClick={this.deleteClicked(orderItem)}>
                         <DeleteIcon/>
                     </IconButton>
                 </ListItemSecondaryAction>

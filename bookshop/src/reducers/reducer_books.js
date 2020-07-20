@@ -1,5 +1,4 @@
-
-import { BOOK_ACTIONS } from '../actions/actions_book';
+import {BOOK_ACTIONS} from '../actions/actions_book';
 
 
 export function BooksReducer(state = null, action) {
@@ -8,11 +7,15 @@ export function BooksReducer(state = null, action) {
             if (action.payload.data._embedded && action.payload.data._embedded.books) {
                 const books = action.payload.data._embedded.books;
                 const map = new Map(books.map(book => [book.id, book]));
-                const filter = action.filter;
-                return Object.assign(map, { filter: filter });
+                return {map, filter: action.filter};
             } else {
-                return null;
+                return {map: null, filter: action.filter};
             }
+        case BOOK_ACTIONS.FETCH:
+            const book = action.payload.data;
+            let map = state ? new Map(state.map) : new Map();
+            map.set(book.id, book);
+            return {map, filter: null};
         default:
             return state;
     }

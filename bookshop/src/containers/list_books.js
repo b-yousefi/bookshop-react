@@ -11,6 +11,7 @@ import {
     CardContent,
     CardMedia,
     Grid,
+    Hidden,
     IconButton,
     Tooltip,
     Typography,
@@ -49,7 +50,7 @@ class BooKList extends Component {
         }
 
         return (
-            <Grid key={key} item xs={4} md={3} height="100%">
+            <Grid key={key} item xs={6} md={3} height="100%">
                 <Card className={classes.mediaroot}>
                     <CardActionArea component={Link}
                                     to={{
@@ -69,9 +70,9 @@ class BooKList extends Component {
                     </CardActionArea>
                     <CardActions disableSpacing>
                         <Box display="flex" flexDirection="row" width="100%">
-                            <Box alignSelf="center" flexGrow={1}>
+                            <Box alignSelf="center" flexGrow={1} style={{paddingInlineStart: 10}}>
                                 <Typography gutterBottom component="h5">
-                                    Price: {book.price}$
+                                    <Hidden xsDown>Price:</Hidden> {book.price}$
                                 </Typography>
                             </Box>
                             <Box>
@@ -105,10 +106,10 @@ class BooKList extends Component {
 
     render() {
 
-        if (!this.props.books) {
+        if (!this.props.books || !this.props.books.map) {
             return "";
         }
-        const books = this.props.books;
+        const books = this.props.books.map;
         return (
             <React.Fragment>
                 <Grid container item spacing={2}>

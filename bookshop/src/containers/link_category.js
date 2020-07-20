@@ -10,6 +10,10 @@ import { makeGetCategory } from '../reducers/selectors';
 
 class CategoryLink extends Component {
     render() {
+        if (!this.props.category) {
+            return "";
+        }
+
         return (
             <Link color="inherit" component={NavLink}
                 to={{

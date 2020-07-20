@@ -5,41 +5,45 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import RootReducer from './reducers/index'
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
+import {applyMiddleware, createStore} from 'redux';
+import {Provider} from 'react-redux';
+
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 import axios from 'axios';
 import ReduxPromise from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
-
-// initial state
-let initialState = {
-  user: {
-    isLoggedIn: false
-  },
-  notification: null,
-  filter: {
-    publicationIds: [],
-    categoryIds: [],
-    authorIds: []
-  }
-};
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.patch['Content-Type'] = 'application/json';
 axios.defaults.headers.put['Content-Type'] = 'application/json';
 
-const store = applyMiddleware(ReduxPromise, ReduxThunk,)(createStore);
+const persistConfig = {
+    key: 'root',
+    storage: storage,
+    whitelist: ['user', 'filter']
+};
+
+const pReducer = persistReducer(persistConfig, RootReducer);
+
+
+const store = applyMiddleware(ReduxPromise, ReduxThunk,)(createStore)(pReducer);
+export const persistor = persistStore(store);
 
 const routing = (
 
-  <Provider store={store(RootReducer, initialState)}>
-    <App />
-  </Provider>
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+            <App/>
+        </PersistGate>
+    </Provider>
 )
 
 ReactDOM.render(
-  routing,
-  document.getElementById('root')
+    routing,
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

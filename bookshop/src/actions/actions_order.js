@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {setError} from './actions';
-import _ from 'lodash';
 
 const ORDER_URL = `${process.env.REACT_APP_API_URL}/api/orders`;
 

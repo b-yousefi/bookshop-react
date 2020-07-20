@@ -26,8 +26,8 @@ export const makeGetAuthor = () => {
 
 const getBookById = (state, bookId) => {
     if (state.books) {
-        if (state.books.has(bookId)) {
-            return state.books.get(bookId);
+        if (state.books.map.has(bookId)) {
+            return state.books.map.get(bookId);
         }
     }
     const booksMap = getBooksInShoppingCart(state);

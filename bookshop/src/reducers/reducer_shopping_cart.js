@@ -1,5 +1,12 @@
 import {SHOPPING_CART_ACTIONS} from '../actions/actions_shopping_cart';
 
+function computeTotalPrice(orderItems) {
+    let totalPrice = 0;
+    orderItems.forEach((orderItem, key)=>{
+       totalPrice+=orderItem.quantity * orderItem.book.price;
+    });
+    return totalPrice;
+}
 
 export function ShoppingCartReducer(state = null, action) {
     switch (action.type) {
@@ -30,7 +37,8 @@ export function ShoppingCartReducer(state = null, action) {
                     }
                 );
             }
-            return {...state, orderItems: uOrderItems, booksMap: uBooksMap};
+            const totalPrice = computeTotalPrice(uOrderItems);
+            return {...state, orderItems: uOrderItems, booksMap: uBooksMap, totalPrice};
         case SHOPPING_CART_ACTIONS.CLEAR:
             return null;
         default:

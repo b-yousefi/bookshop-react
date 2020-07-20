@@ -1,58 +1,52 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
-import {
-    Grid,
-    Card,
-    CardActionArea,
-    CardMedia,
-    CardContent,
-    Typography,
-    Box,
-} from '@material-ui/core';
-import {
-    Link,
-    Route,
-    Switch,
-} from 'react-router-dom';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {withStyles} from '@material-ui/core/styles';
+import {Card, CardActionArea, CardContent, CardMedia, Grid, Hidden, Typography,} from '@material-ui/core';
+import {Route, Switch,Link,} from 'react-router-dom';
 
 import AuthorContent from './content_author';
 
 class AuthorList extends Component {
 
     getDateString(str) {
-        var date = new Date(str.substring(0, 10));
-        const month = date.toLocaleString('default', { month: 'long' });
+        const date = new Date(str.substring(0, 10));
+        const month = date.toLocaleString('default', {month: 'long'});
         return `${date.getDate()} ${month} ${date.getFullYear()}`;
+    }
+
+    getDateStringBrief(str) {
+        const date = new Date(str.substring(0, 10));
+        return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
     }
 
     create_item(key, author, classes) {
         return (
-            <Grid key={key} item xs={4} md={3} height="100%"  >
-                <Card className={classes.mediaroot} >
-                    <CardActionArea component={Link}
+            <Grid key={key} item xs={6} md={3}>
+                <Card className={classes.mediaroot}>
+                    <CardActionArea
+                        component={Link}
                         to={{
                             pathname: `${this.props.match.url}/${key}`,
-                        }} >
-                        <Box display="flex" flexDirection="column" height="100%" >
-                            <CardMedia
-                                className={classes.media}
-                                image={`data:image/jpeg;base64,${author.picture.data}`}
-                                title={author.fullName}
-                            />
-                            <Box display="flex" flexDirection="column" height="100%" p={2}>
-                                <Box flexGrow={1} >
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        {author.fullName}
-                                    </Typography>
-                                </Box>
-                                <Box>
-                                    <Typography variant="body2" color="textSecondary" component="h5">
-                                        Born: {author.birthday ? this.getDateString(author.birthday) : ""}
-                                    </Typography>
-                                </Box>
-                            </Box>
-                        </Box>
+                        }}>
+                        <CardMedia
+                            className={classes.media}
+                            image={`data:image/jpeg;base64,${author.picture.data}`}
+                            title={author.fullName}
+
+                        />
+                        <CardContent component="div" className={classes.title} title={author.fullName}>
+                            <Typography noWrap gutterBottom variant="h5" component="h2">
+                                {author.fullName}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="h5">
+                                <Hidden smUp>
+                                    Born: {author.birthday ? this.getDateStringBrief(author.birthday) : ""}
+                                </Hidden>
+                                <Hidden xsDown>
+                                    Born: {author.birthday ? this.getDateString(author.birthday) : ""}
+                                </Hidden>
+                            </Typography>
+                        </CardContent>
                     </CardActionArea>
 
                 </Card>
@@ -61,7 +55,7 @@ class AuthorList extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
 
         if (!this.props.authors) {
             return "";
@@ -69,19 +63,19 @@ class AuthorList extends Component {
         const authors = this.props.authors;
 
         return (
-            <Grid container spacing={1} >
+            <Grid container spacing={1}>
                 <Switch>
                     <Route exact path={`${this.props.match.url}`}>
                         <Grid item md={2}>
                         </Grid>
-                        <Grid container item xs={12} md={8} spacing={2} >
+                        <Grid container item xs={12} md={8} spacing={2}>
                             {[...authors.keys()].map(key => {
-                                return this.create_item(key, authors.get(key), classes)
-                            }
+                                    return this.create_item(key, authors.get(key), classes)
+                                }
                             )}
                         </Grid>
                     </Route>
-                    <Route exact path={`${this.props.match.url}/:id`} component={AuthorContent} />
+                    <Route exact path={`${this.props.match.url}/:id`} component={AuthorContent}/>
                 </Switch>
 
             </Grid>
@@ -115,6 +109,11 @@ const useStyles = theme => ({
         height: 0,
         paddingTop: '100%',
     },
+    title: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        // height: /* Just enough to show 2 lines */
+    }
 });
 
 export default connect(mapStateToProps, null)(withStyles(useStyles)(AuthorList));

@@ -63,7 +63,7 @@ class PopperBtn extends Component {
                         </Button>
                     }
                 </Tooltip>
-                <Popper open={this.state.open} anchorEl={this.anchorRef.current} placement={this.props.placement}
+                <Popper open={this.state.open && !this.props.disable} anchorEl={this.anchorRef.current} placement={this.props.placement}
                         disablePortal>
                     <Paper>
                         <ClickAwayListener onClickAway={this.handleClose}>

@@ -3,16 +3,19 @@ import { AUTHOR_ACTIONS } from '../actions/action_authors';
 import { CAT_ACTIONS } from '../actions/actions_categories';
 import { PUBLICATION_ACTIONS } from '../actions/actions_publicaion';
 
-export function FilterReducer(state = null, action) {
-    let newState = {
-        publicationIds: [],
-        categoryIds: [],
-        authorIds: [],
-    };
+const INITIAL_STATE = {
+    publicationIds: [],
+    categoryIds: [],
+    authorIds: [],
+    refresh: true
+};
+
+export function FilterReducer(state = INITIAL_STATE, action) {
+    let newState = Object.assign({}, state);
     switch (action.type) {
         case FILTER_ACTIONS.SET:
         case FILTER_ACTIONS.CLEAR:
-            newState = action.data;
+            newState = Object.assign({}, action.data);
             break;
         case AUTHOR_ACTIONS.SELECT:
             newState.authorIds = [action.author];

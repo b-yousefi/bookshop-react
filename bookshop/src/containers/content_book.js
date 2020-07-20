@@ -1,40 +1,40 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import {
-    Grid,
-    CardMedia,
-    Typography,
-    Paper,
-    List,
-    Breadcrumbs,
-} from '@material-ui/core';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Breadcrumbs, CardMedia, Grid, List, Paper, Typography,} from '@material-ui/core';
 
-import { makeGetBook } from '../reducers/selectors';
+import {makeGetBook} from '../reducers/selectors';
 import AuthorLink from './link_author';
 import CategoryLink from './link_category';
 import PublicationLink from './link_publication';
+import {fetchBook} from "../actions/actions_book";
+import {bindActionCreators} from "redux";
 
 class BookContent extends Component {
+    componentDidMount() {
+        if(!this.props.book){
+            this.props.fetchBook(this.props.match.params.id);
+        }
+    }
 
     render() {
         if (this.props.book) {
             const book = this.props.book;
             return (
-                <Grid container spacing={2} style={{ padding: 20 }}>
+                <Grid container spacing={2} style={{padding: 20}}>
                     <Grid item md={2}>
 
                     </Grid>
-                    <Grid item container xs={12} md={8} spacing={2} component={Paper} >
+                    <Grid item container xs={12} md={8} spacing={2} component={Paper}>
                         {/* <Paper style={{ width: "100%" }}> */}
                         <Grid item container>
-                            <Grid item xs={12} md={4} >
+                            <Grid item xs={12} md={4}>
                                 <CardMedia
-                                    style={{ height: 0, paddingTop: '150%' }}
+                                    style={{height: 0, paddingTop: '150%'}}
                                     image={`data:image/jpeg;base64,${book.picture.data}`}
                                     title={book.name}
                                 />
                             </Grid>
-                            <Grid item xs={12} md={8} style={{ padding: 16 }}>
+                            <Grid item xs={12} md={8} style={{padding: 16}}>
                                 <List component="div">
                                     <Typography component="h4" variant="h2">{book.name}</Typography>
                                     <Typography variant="body1" align="justify" gutterBottom>
@@ -43,7 +43,7 @@ class BookContent extends Component {
                                 </List>
                             </Grid>
                         </Grid>
-                        <Grid item container >
+                        <Grid item container>
                             <Grid item xs={4} md={2}>
                                 <Typography variant="body1" gutterBottom>
                                     Authors:
@@ -53,7 +53,7 @@ class BookContent extends Component {
                                 <Breadcrumbs aria-label="breadcrumb" separator=",">
                                     {
                                         book.authorIds.map(id => {
-                                            return <AuthorLink key={id} authorId={id} />;
+                                            return <AuthorLink key={id} authorId={id}/>;
                                         })
                                     }
                                 </Breadcrumbs>
@@ -67,7 +67,7 @@ class BookContent extends Component {
                                 <Breadcrumbs aria-label="breadcrumb" separator=",">
                                     {
                                         book.categoryIds.map(id => {
-                                            return <CategoryLink categoryId={id} key={id} />
+                                            return <CategoryLink categoryId={id} key={id}/>
                                         })
 
                                     }
@@ -80,7 +80,7 @@ class BookContent extends Component {
                             </Grid>
                             <Grid item xs={8} md={10}>
                                 <Breadcrumbs aria-label="breadcrumb" separator=",">
-                                    <PublicationLink publicationId={book.publicationId} />
+                                    <PublicationLink publicationId={book.publicationId}/>
                                 </Breadcrumbs>
                             </Grid>
                         </Grid>
@@ -101,5 +101,8 @@ function mapStateToProps(state, props) {
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({fetchBook}, dispatch);
+}
 
-export default connect(mapStateToProps, null)(BookContent);
+export default connect(mapStateToProps, mapDispatchToProps)(BookContent);

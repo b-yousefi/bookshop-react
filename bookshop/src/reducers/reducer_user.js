@@ -1,6 +1,10 @@
 import {USER_ACTIONS} from '../actions/actions_user';
 
-export function UserReducer(state = null, action) {
+const INITIAL_STATE = {
+    isLoggedIn: false
+};
+
+export function UserReducer(state = INITIAL_STATE, action) {
 
     switch (action.type) {
         case USER_ACTIONS.FETCH:

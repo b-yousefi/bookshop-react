@@ -14,12 +14,21 @@ import DrawerMenuXS from './drawer_menu_xs';
 
 import {logoutUser} from '../actions/actions_user';
 import {getShoppingCartItemsCount} from '../reducers/selectors';
+import {fetchShoppingCart} from "../actions/actions_shopping_cart";
 import PopperShoppingCart from "../components/popper_shopping_cart";
+import axios from "axios";
 
 
 class Menu extends Component {
     state = {
         drawer_open: false,
+    }
+
+    componentDidMount() {
+        if (this.props.user.isLoggedIn) {
+            axios.defaults.headers.common['Authorization'] = this.props.user.token;
+            this.props.fetchShoppingCart(this.props.user.username);
+        }
     }
 
     onLogout = () => {
@@ -163,7 +172,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({logoutUser}, dispatch);
+    return bindActionCreators({logoutUser, fetchShoppingCart}, dispatch);
 }
 
 const useStyles = theme => ({

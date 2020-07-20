@@ -23,7 +23,6 @@ const useStyles = theme => ({
 
 class ShoppingCart extends Component {
     onListItemClicked = () => {
-        console.log("ShoppingCart")
         this.props.onClick();
     }
 

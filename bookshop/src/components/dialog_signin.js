@@ -9,10 +9,6 @@ export default function SignInAlertDialog(props) {
         setOpen(props.open);
     }, [props.open]);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
     const handleClose = () => {
         props.setOpen(false);
     };

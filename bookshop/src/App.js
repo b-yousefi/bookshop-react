@@ -30,7 +30,6 @@ import {Container,} from '@material-ui/core';
 
 import './App.css';
 import Home from './containers/home';
-import BookList from './containers/list_books';
 import BookContent from './containers/content_book';
 import Menu from './containers/menu';
 import UserForm from './containers/form_user';
@@ -110,7 +109,7 @@ class App extends Component {
                             }}
                         />
                         <Route exact path="/home" component={Home}/>
-                        <Route exact path="/books" component={BookList}/>
+                        <Route exact path="/books" component={Home}/>
                         <Route exact path="/books/:id" component={BookContent}/>
                         <Route path="/authors" component={AuthorList}/>
                         <Route path="/publications" component={PublicationList}/>

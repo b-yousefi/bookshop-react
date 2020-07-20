@@ -5,7 +5,6 @@ import {Grid, Paper,} from '@material-ui/core';
 
 import Search from './panel_search';
 import BookList from './list_books';
-import {clearFilter} from '../actions/actions_filter';
 import {filterBooks} from '../actions/actions_book';
 
 class Home extends Component {
@@ -32,7 +31,7 @@ class Home extends Component {
 
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({clearFilter, filterBooks}, dispatch);
+    return bindActionCreators({filterBooks}, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(Home);
