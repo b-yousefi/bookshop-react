@@ -7,7 +7,7 @@ export function BooksReducer(state = null, action) {
             if (action.payload.data._embedded && action.payload.data._embedded.books) {
                 const books = action.payload.data._embedded.books;
                 const map = new Map(books.map(book => [book.id, book]));
-                return {map, filter: action.filter};
+                return {map, filter: action.filter, page: action.payload.data.page};
             } else {
                 return {map: null, filter: action.filter};
             }

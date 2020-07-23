@@ -16,6 +16,7 @@ import {
     Tooltip,
     Typography,
 } from '@material-ui/core';
+import Pagination from "@material-ui/lab/Pagination";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import {Link,} from 'react-router-dom';
@@ -23,11 +24,13 @@ import {Link,} from 'react-router-dom';
 import {updateShoppingCart} from '../actions/actions_shopping_cart';
 import SignInAlertDialog from '../components/dialog_signin';
 import {getBooksInShoppingCart} from "../reducers/selectors";
+import {filterBooksByPage} from '../actions/actions_book';
 
 class BooKList extends Component {
 
     state = {
         open_signIn: false,
+        page: 1,
     }
 
     addToCartClicked = (book, quantity) => () => {
@@ -40,6 +43,11 @@ class BooKList extends Component {
 
     removeFromCartClicked = (book, quantity) => () => {
         this.props.updateShoppingCart(book, quantity);
+    }
+
+    handleChange = (event, value) => {
+        this.setState({page: value});
+        this.props.filterBooksByPage(value);
     }
 
     create_item(key, book) {
@@ -118,6 +126,15 @@ class BooKList extends Component {
                         }
                     )}
                 </Grid>
+                <Box display="flex" justifyContent="center" m={1} p={1} style={{width: '100%'}}>
+                    {this.props.books.page && this.props.books.page.totalPages > 1 ?
+                        <Pagination color="primary" count={this.props.books.page.totalPages}
+                                    page={this.state.page}
+                                    onChange={this.handleChange}
+                        />
+                        : ""
+                    }
+                </Box>
                 <SignInAlertDialog open={this.state.open_signIn}
                                    setOpen={(open) => this.setState({open_signIn: open})}/>
             </React.Fragment>
@@ -157,7 +174,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({updateShoppingCart}, dispatch);
+    return bindActionCreators({updateShoppingCart, filterBooksByPage}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(BooKList));

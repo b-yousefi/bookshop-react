@@ -12,6 +12,8 @@ export const BOOK_ACTIONS = {
     CREATE: 'BOOK_CREATE',
 };
 
+const PAGE_SIZE = 8;
+
 export function fetchBook(id) {
     return dispatch => {
         const url = `${BOOK_URL}/${id}`
@@ -51,8 +53,16 @@ export function filterBooks() {
             //do nothing
             return;
         }
+        dispatch(filterBooksByPage(1));
+    }
+}
 
-        const url = `${BOOK_URL}/filter?publicationIds=${(filter.publicationIds).map(f => f.id)}&categoryIds=${filter.categoryIds.map(f => f.id)}&authorIds=${filter.authorIds.map(f => f.id)}`
+export function filterBooksByPage(page) {
+    return (dispatch, getState) => {
+        const filter = getState().filter;
+        const url = `${BOOK_URL}/filter?publicationIds=${(filter.publicationIds).map(f => f.id)}` +
+            `&categoryIds=${filter.categoryIds.map(f => f.id)}&authorIds=${filter.authorIds.map(f => f.id)}` +
+            `&page=${page - 1}&size=${PAGE_SIZE}`
         axios.get(url)
             .then(response => {
                 dispatch(
