@@ -58,7 +58,7 @@ class BooKList extends Component {
         }
 
         return (
-            <Grid key={key} item xs={6} md={3} height="100%">
+            <Grid key={key} item xs={6} md={3} sm={4} height="100%">
                 <Card className={classes.mediaroot}>
                     <CardActionArea component={Link}
                                     to={{
@@ -127,12 +127,11 @@ class BooKList extends Component {
                     )}
                 </Grid>
                 <Box display="flex" justifyContent="center" m={1} p={1} style={{width: '100%'}}>
-                    {this.props.books.page && this.props.books.page.totalPages > 1 ?
-                        <Pagination color="primary" count={this.props.books.page.totalPages}
-                                    page={this.state.page}
-                                    onChange={this.handleChange}
-                        />
-                        : ""
+                    {this.props.books.page && this.props.books.page.totalPages > 1 &&
+                    <Pagination color="primary" count={this.props.books.page.totalPages}
+                                page={this.state.page}
+                                onChange={this.handleChange}
+                    />
                     }
                 </Box>
                 <SignInAlertDialog open={this.state.open_signIn}

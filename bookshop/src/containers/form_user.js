@@ -6,18 +6,12 @@ import {Field, Form} from 'react-final-form';
 import {TextField,} from 'final-form-material-ui';
 import {Button, Grid, Paper,} from '@material-ui/core';
 
-import {fetchUser, regsiterUser, updateUser, USER_ACTIONS} from '../actions/actions_user';
+import {regsiterUser, updateUser, USER_ACTIONS} from '../actions/actions_user';
 import {COMMON} from '../actions/actions';
 import PasswordControl from '../components/form/control_password';
 import PhoneNumberControl from '../components/form/control_phone_number';
 
 class UserForm extends Component {
-
-    componentDidMount() {
-        if (this.props.user.isLoggedIn) {
-            this.props.fetchUser(this.props.user.username);
-        }
-    }
 
     validate = values => {
 
@@ -189,7 +183,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchUser, updateUser, regsiterUser}, dispatch);
+    return bindActionCreators({updateUser, regsiterUser}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserForm);

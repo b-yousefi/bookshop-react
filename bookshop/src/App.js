@@ -42,6 +42,9 @@ import LoginForm from './containers/form_login';
 import {clearNotif} from './actions/actions';
 import {fetchAuthors} from './actions/action_authors';
 import {fetchPublications} from './actions/actions_publicaion';
+import Order from './containers/order';
+import AddressList from './containers/list_address';
+import UserInfo from './components/user_info';
 
 library.add(fab, faCheckSquare, faCoffee, faStar, faEdit, faTrash, faFilm, faBook, faBookOpen,
     faSignInAlt, faUser, faSignOutAlt, faChevronLeft, faBars, faEye, faEyeSlash, faTimes, faLink)
@@ -110,12 +113,15 @@ class App extends Component {
                         />
                         <Route exact path="/home" component={Home}/>
                         <Route exact path="/books" component={Home}/>
-                        <Route exact path="/books/:id" component={BookContent}/>
+                        <Route path="/books/:id" component={BookContent}/>
                         <Route path="/authors" component={AuthorList}/>
                         <Route path="/publications" component={PublicationList}/>
                         <Route path="/user" component={UserForm} exact={true}/>
                         <Route path="/categories/:id" component={CategoryListContent}/>
                         <Route path="/login" component={LoginForm}/>
+                        <Route path="/order" component={Order} exact={true}/>
+                        <Route path="/addresses" component={AddressList}/>
+                        <Route path="/user_info" component={UserInfo}/>
                     </Container>
 
                 </div>

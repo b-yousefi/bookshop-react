@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import {Button, Divider, Grid, List, Typography} from '@material-ui/core';
-import ShoppingCartItem from "./item_shopping_cart";
+import {NavLink} from "react-router-dom";
+import OrderItem from "./item_order";
 
 const useStyles = theme => ({
     root: {
@@ -23,19 +24,25 @@ const useStyles = theme => ({
 
 class ShoppingCart extends Component {
     onListItemClicked = () => {
-        this.props.onClick();
+        if (this.props.onClick)
+            this.props.onClick();
     }
 
     render() {
         const {classes} = this.props;
+        if (!this.props.shopping_cart) {
+            return ""
+        }
         return (
             <div className={classes.root}>
                 <List dense className={classes.list}>
                     {[...this.props.shopping_cart.orderItems.keys()].map(orderItemId => {
                         const orderItem = this.props.shopping_cart.orderItems.get(orderItemId);
                         return (
-                            <ShoppingCartItem orderItem={orderItem} key={orderItem.id}
-                                              onListItemClicked={this.onListItemClicked}/>
+                            <OrderItem orderItem={orderItem} key={orderItem.id}
+                                              onListItemClicked={this.onListItemClicked}
+                                              edit_count={this.props.edit_count}
+                                              report={this.props.report}/>
                         );
                     })}
                 </List>
@@ -47,11 +54,19 @@ class ShoppingCart extends Component {
                     <Grid item xs={6} md={4}>
                         <Typography variant="body1">{this.props.shopping_cart.totalPrice}$</Typography>
                     </Grid>
+
                     <Grid item xs={12} md={4}>
-                        <Button variant="contained" color="primary" style={{width: "100%"}}>Order</Button>
+                        {this.props.show_order_button &&
+                            <Button variant="contained"
+                                    onClick={ this.onListItemClicked}
+                                    color="primary"
+                                    component={NavLink} to="/order"
+                                    style={{width: "100%"}}>Order</Button>
+                        }
                     </Grid>
                 </Grid>
             </div>
+
         );
     }
 }

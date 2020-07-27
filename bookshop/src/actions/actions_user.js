@@ -35,6 +35,7 @@ export function loginUser(credentials) {
         ).then((response) => {
             const token = `Token ${response.data.token}`;
             axios.defaults.headers.common['Authorization'] = token;
+            dispatch(fetchUser(credentials.username));
             dispatch(fetchShoppingCart(credentials.username));
             dispatch(
                 {

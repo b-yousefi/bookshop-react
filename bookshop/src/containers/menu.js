@@ -50,7 +50,7 @@ class Menu extends Component {
         return (
             <Tooltip title={tooltipLabel} aria-label={tooltipLabel}>
                 <IconButton
-                    component={NavLink} to="/user"
+                    component={NavLink} to="/user_info"
                     color="inherit"
                 >
                     <AccountBoxIcon/>

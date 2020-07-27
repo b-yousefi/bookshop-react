@@ -12,6 +12,7 @@ import {SelectedCategoryReducer} from './reducer_selected_category';
 import {SelectedPublicationReducer} from './reducer_selected_publication';
 import {OrdersReducer} from './reducer_orders';
 import {ShoppingCartReducer} from './reducer_shopping_cart';
+import {AddressesReducer} from './reducer_addresses';
 
 const RootReducer = combineReducers(
     {
@@ -28,6 +29,7 @@ const RootReducer = combineReducers(
         selected_publication: SelectedPublicationReducer,
         orders: OrdersReducer,
         shopping_cart: ShoppingCartReducer,
+        addresses: AddressesReducer,
     }
 )
 

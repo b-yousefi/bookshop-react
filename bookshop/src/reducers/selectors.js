@@ -67,3 +67,30 @@ export const getBooksInShoppingCart = (state) => {
     } else
         return null;
 }
+
+const getAddressById = (state, addressId) => state.addresses ?
+    state.addresses.map.get(addressId) : undefined;
+
+export const makeGetAddress = () => {
+    return createSelector(
+        [getAddressById],
+        (address) => {
+            return address;
+        }
+    )
+}
+
+const getOrderById = (state, orderId) => {
+    return state.orders ?
+        state.orders.map.get(orderId) : undefined;
+}
+
+
+export const makeGetOrder = () => {
+    return createSelector(
+        [getOrderById],
+        (order) => {
+            return order;
+        }
+    )
+}
