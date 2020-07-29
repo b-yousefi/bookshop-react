@@ -23,7 +23,7 @@ export function fetchShoppingCart(username) {
                 );
             }).catch(error => {
             dispatch(
-                setError(error.response.data, SHOPPING_CART_ACTIONS.FETCH)
+                setError(error.response, SHOPPING_CART_ACTIONS.FETCH)
             );
         })
     }
@@ -58,7 +58,7 @@ export function updateShoppingCart(book, quantity) {
             })
             .catch(error => {
                 dispatch(
-                    setError(error.response.data, SHOPPING_CART_ACTIONS.UPDATE)
+                    setError(error.response, SHOPPING_CART_ACTIONS.UPDATE)
                 );
             });
     }

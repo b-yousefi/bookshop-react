@@ -24,7 +24,7 @@ export function fetchCategories() {
                 );
             }).catch(error => {
                 dispatch(
-                    setError(error.response.data, CAT_ACTIONS.FETCH)
+                    setError(error.response, CAT_ACTIONS.FETCH)
                 );
             })
     }

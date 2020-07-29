@@ -23,7 +23,7 @@ export function fetchAuthors() {
                 );
             }).catch(error => {
                 dispatch(
-                    setError(error.response.data, AUTHOR_ACTIONS.FETCH)
+                    setError(error.response, AUTHOR_ACTIONS.FETCH)
                 );
             })
     }

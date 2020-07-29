@@ -23,7 +23,7 @@ export function fetchPublications() {
                 );
             }).catch(error => {
                 dispatch(
-                    setError(error.response.data, PUBLICATION_ACTIONS.FETCH)
+                    setError(error.response, PUBLICATION_ACTIONS.FETCH)
                 );
             })
     }

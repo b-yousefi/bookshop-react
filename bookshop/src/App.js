@@ -45,6 +45,7 @@ import {fetchPublications} from './actions/actions_publicaion';
 import Order from './containers/order';
 import AddressList from './containers/list_address';
 import UserInfo from './components/user_info';
+import About from "./components/about";
 
 library.add(fab, faCheckSquare, faCoffee, faStar, faEdit, faTrash, faFilm, faBook, faBookOpen,
     faSignInAlt, faUser, faSignOutAlt, faChevronLeft, faBars, faEye, faEyeSlash, faTimes, faLink)
@@ -122,6 +123,7 @@ class App extends Component {
                         <Route path="/order" component={Order} exact={true}/>
                         <Route path="/addresses" component={AddressList}/>
                         <Route path="/user_info" component={UserInfo}/>
+                        <Route path="/about" component={About}/>
                     </Container>
 
                 </div>

@@ -34,8 +34,6 @@ class OrderList extends Component {
                           pathname: `${this.props.match.url}/${key}`,
                       }}
             >
-                {/*<ListItemText primary={`Total Price: ${order.totalPrice}$`} secondary={`Status: ${order.currentStatus.status}*/}
-                {/*Last changed at: ${order.currentStatus.updatedAt.substr(0,10)}, ${order.currentStatus.updatedAt.substr(11,5)}`}/>*/}
                 <Grid container>
                     <Grid item xs={7}>
                         <Typography variant="body1" align="justify" gutterBottom>
@@ -65,7 +63,7 @@ class OrderList extends Component {
             return "";
         }
         const orders = this.props.orders;
-        console.log(orders)
+
         return (
             <Box display="flex" justifyContent="center">
                 <Switch>

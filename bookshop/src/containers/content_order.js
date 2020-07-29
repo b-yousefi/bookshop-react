@@ -15,8 +15,7 @@ class OrderContent extends Component {
     }
 
     render() {
-        console.log(this.props.order)
-        const {classes} = this.props;
+
         if (!this.props.order) {
             return ""
         }
@@ -27,8 +26,8 @@ class OrderContent extends Component {
                     {this.props.order.orderItems.map(orderItem => {
                         return (
                             <OrderItem orderItem={orderItem} key={orderItem.id}
-                                              edit_count={false}
-                                              report={true}/>
+                                       edit_count={false}
+                                       report={true}/>
                         );
                     })}
                 </List>

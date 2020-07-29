@@ -117,6 +117,15 @@ class Menu extends Component {
         )
     }
 
+    create_about(){
+        return (
+            <Button color="inherit"
+                    component={NavLink} to="/about">
+                About
+            </Button>
+        )
+    }
+
     create_toolbar() {
         const {classes} = this.props;
 
@@ -133,6 +142,7 @@ class Menu extends Component {
                     <PopperCategoryList classes={classes}/>
                     {this.create_tlb_authors()}
                     {this.create_tlb_publications()}
+                    {this.create_about()}
                 </Hidden>
                 <div className={classes.grow}/>
                 {this.create_tlb_shoppingCart()}

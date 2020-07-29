@@ -10,6 +10,9 @@ import {
     ListItemIcon,
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import PersonIcon from '@material-ui/icons/Person';
+import RoomIcon from '@material-ui/icons/Room';
 import ClassIcon from '@material-ui/icons/Class';
 import { withStyles } from '@material-ui/core/styles';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -18,6 +21,7 @@ import { NavLink } from 'react-router-dom';
 
 import SubCategory from '../components/subCategoryList';
 import { fetchCategories } from '../actions/actions_categories';
+import Divider from "@material-ui/core/Divider";
 
 
 class DrawerMenuXS extends Component {
@@ -131,6 +135,30 @@ class DrawerMenuXS extends Component {
                             component={NavLink} to="/publications"
                             onClick={this.props.toggleDrawer(false)}>
                             <ListItemText primary={"Publications"} />
+                        </ListItem>
+                        <ListItem button color="inherit"
+                                  component={NavLink} to="/about"
+                                  onClick={this.props.toggleDrawer(false)}>
+                            <ListItemText primary={"About"} />
+                        </ListItem>
+                        <Divider />
+                        <ListItem button color="inherit"
+                                  component={NavLink} to="/user_info"
+                                  onClick={this.props.toggleDrawer(false)}>
+                            <ListItemIcon><PersonIcon /> </ListItemIcon>
+                            <ListItemText primary={"Profile"} />
+                        </ListItem>
+                        <ListItem button color="inherit"
+                                  component={NavLink} to="/user_info/addresses"
+                                  onClick={this.props.toggleDrawer(false)}>
+                            <ListItemIcon><RoomIcon /> </ListItemIcon>
+                            <ListItemText primary={"Addresses"} />
+                        </ListItem>
+                        <ListItem button color="inherit"
+                                  component={NavLink} to="/user_info/orders"
+                                  onClick={this.props.toggleDrawer(false)}>
+                            <ListItemIcon><ShoppingCartIcon/></ListItemIcon>
+                            <ListItemText primary={"Orders"} />
                         </ListItem>
                     </List>
                 </div>

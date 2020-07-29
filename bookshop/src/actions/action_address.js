@@ -25,7 +25,7 @@ export function fetchAddresses() {
                 );
             }).catch(error => {
             dispatch(
-                setError(error.response.data, ADDRESS_ACTIONS.FETCH)
+                setError(error.response, ADDRESS_ACTIONS.FETCH)
             );
         })
     }
@@ -45,7 +45,7 @@ export function deleteAddress(address) {
                 ));
             }).catch(error => {
             dispatch(
-                setError(error.response.data, ADDRESS_ACTIONS.DELETE)
+                setError(error.response, ADDRESS_ACTIONS.DELETE)
             );
         })
     }
@@ -71,7 +71,7 @@ export function addAddress(address) {
             ));
         }).catch(error => {
             dispatch(
-                setError(error.response.data, ADDRESS_ACTIONS.CREATE)
+                setError(error.response, ADDRESS_ACTIONS.CREATE)
             );
         })
     }
@@ -90,7 +90,7 @@ export function updateAddress(address) {
                 ));
             }).catch(error => {
             dispatch(
-                setError(error.response.data, ADDRESS_ACTIONS.UPDATE)
+                setError(error.response, ADDRESS_ACTIONS.UPDATE)
             );
         })
     }

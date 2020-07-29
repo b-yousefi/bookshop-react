@@ -40,7 +40,7 @@ class Order extends Component {
                 return (
                     <Box display={"flex"} flexDirection={"column"} m={2}>
                         <AddressList setAddress={this.setAddress} address={this.state.address} view={true}/>
-                        <Button variant="contained" color="primary" style={{marginBottom: 5}}
+                        <Button variant="contained" color="secondary"  style={{marginBottom: 5}}
                                 component={NavLink} to="/addresses">
                             Add or Edit Addresses
                         </Button>
@@ -118,6 +118,7 @@ class Order extends Component {
 const useStyles = theme => ({
     root: {
         width: '100%',
+        marginBottom: theme.spacing(2),
     },
     backButton: {
         marginRight: theme.spacing(1),

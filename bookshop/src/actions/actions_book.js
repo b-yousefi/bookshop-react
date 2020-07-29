@@ -27,7 +27,7 @@ export function fetchBook(id) {
                 );
             }).catch(error => {
             dispatch(
-                setError(error.response.data, BOOK_ACTIONS.FETCH)
+                setError(error.response, BOOK_ACTIONS.FETCH)
             );
         })
     }
@@ -74,7 +74,7 @@ export function filterBooksByPage(page) {
                 );
             }).catch(error => {
             dispatch(
-                setError(error.response.data, BOOK_ACTIONS.FILTER)
+                setError(error.response, BOOK_ACTIONS.FILTER)
             );
         })
     }

@@ -35,9 +35,10 @@ export function completeOrder(address) {
                 }
             ));
             dispatch(fetchShoppingCart(user.username));
+            dispatch(fetchOrders());
         }).catch(error => {
             dispatch(
-                setError(error.response.data, ORDER_ACTIONS.CLOSE)
+                setError(error.response, ORDER_ACTIONS.CLOSE)
             );
         })
     }
@@ -55,7 +56,7 @@ export function fetchOrders(page = 1) {
                 );
             }).catch(error => {
             dispatch(
-                setError(error.response.data, ORDER_ACTIONS.FETCH_ALL)
+                setError(error.response, ORDER_ACTIONS.FETCH_ALL)
             );
         })
     }
@@ -74,7 +75,7 @@ export function fetchOrderDetail(order) {
                 );
             }).catch(error => {
             dispatch(
-                setError(error.response.data, ORDER_ACTIONS.FETCH)
+                setError(error.response, ORDER_ACTIONS.FETCH)
             );
         })
     }
