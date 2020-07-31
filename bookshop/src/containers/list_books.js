@@ -11,7 +11,6 @@ import {
     CardContent,
     CardMedia,
     Grid,
-    Hidden,
     IconButton,
     Tooltip,
     Typography,
@@ -26,7 +25,7 @@ import SignInAlertDialog from '../components/dialog_signin';
 import {getBooksInShoppingCart} from "../reducers/selectors";
 import {filterBooksByPage} from '../actions/actions_book';
 
-class BooKList extends Component {
+class BookList extends Component {
 
     state = {
         open_signIn: false,
@@ -48,6 +47,7 @@ class BooKList extends Component {
     handleChange = (event, value) => {
         this.setState({page: value});
         this.props.filterBooksByPage(value);
+        window.scrollTo(0, 0)
     }
 
     create_item(key, book) {
@@ -70,20 +70,20 @@ class BooKList extends Component {
                             title={book.name}
                         />
 
-                        <CardContent component="div" className={classes.title} title={book.name}>
+                        <CardContent component="div" className={classes.content} title={book.name}>
                             <Typography noWrap gutterBottom component="h5">
                                 {book.name}
                             </Typography>
                         </CardContent>
                     </CardActionArea>
-                    <CardActions disableSpacing>
-                        <Box display="flex" flexDirection="row" width="100%">
-                            <Box alignSelf="center" flexGrow={1} style={{paddingInlineStart: 10}}>
-                                <Typography gutterBottom component="h5">
-                                    <Hidden xsDown>Price:</Hidden> {book.price}$
+                    <CardActions disableSpacing className={classes.action}>
+                        <Grid container width="100%" alignItems={"center"}>
+                            <Grid item sm={6} xs={12}>
+                                <Typography gutterBottom component="h5" style={{paddingInlineStart: 10}}>
+                                    Price:{book.price}$
                                 </Typography>
-                            </Box>
-                            <Box>
+                            </Grid>
+                            <Grid item>
                                 <Tooltip title="Remove from shopping cart" aria-label="remove from shopping cart">
                                     <span>
                                         <IconButton aria-label="remove from shopping cart"
@@ -94,6 +94,8 @@ class BooKList extends Component {
                                         </IconButton>
                                     </span>
                                 </Tooltip>
+                            </Grid>
+                            <Grid item>
                                 <Tooltip title="Add to shopping cart" aria-label="add to shopping cart">
                                     <span>
                                         <IconButton aria-label="add to shopping cart" disabled={book.quantity === 0}
@@ -104,8 +106,8 @@ class BooKList extends Component {
                                         </IconButton>
                                     </span>
                                 </Tooltip>
-                            </Box>
-                        </Box>
+                            </Grid>
+                        </Grid>
                     </CardActions>
                 </Card>
             </Grid>
@@ -157,11 +159,12 @@ const useStyles = theme => ({
         height: 0,
         paddingTop: '130%',
     },
-    title: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        // height: /* Just enough to show 2 lines */
-    }
+    content: {
+        paddingBottom: 5
+    },
+    action: {
+        paddingTop: 5,
+    },
 });
 
 function mapStateToProps(state) {
@@ -176,4 +179,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({updateShoppingCart, filterBooksByPage}, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(BooKList));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(BookList));

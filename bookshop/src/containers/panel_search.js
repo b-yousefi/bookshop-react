@@ -2,16 +2,23 @@ import React, {Component} from 'react';
 import CheckboxesTags from '../components/CheckboxesTags';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {List, ListItem, ListSubheader,} from '@material-ui/core';
+import {Hidden, List, ListItem,} from '@material-ui/core';
 
 import {setFilter} from '../actions/actions_filter';
 import {filterBooks} from '../actions/actions_book';
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Typography from "@material-ui/core/Typography";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import {withStyles} from "@material-ui/core/styles";
 
 
 class SearchPanel extends Component {
 
     state = {
-        filter: this.props.filter
+        filter: this.props.filter,
+        expanded: false,
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -28,15 +35,15 @@ class SearchPanel extends Component {
         this.props.filterBooks();
     }
 
-    render() {
+    toggleAccordion = () => {
+        this.setState({expanded: !this.state.expanded})
+    }
+
+    create_filter_list() {
         const {categories, authors, publications} = this.props;
         const {categoryIds, authorIds, publicationIds} = this.state.filter;
-
         return (
-            <List>
-                <ListSubheader style={{backgroundColor: "cadetblue", color: "white"}}>
-                    Filters
-                </ListSubheader>
+            <List style={{width: "100%"}}>
                 {categories && !this.props.hideCategoryFilter ?
                     <ListItem>
                         <CheckboxesTags width='100%'
@@ -91,6 +98,38 @@ class SearchPanel extends Component {
                     : ''}
 
             </List>
+        );
+    }
+
+    render() {
+        return (
+            <React.Fragment>
+                <Hidden mdUp>
+                    <Accordion expanded={this.state.expanded} onChange={this.toggleAccordion}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon style={{color: "white"}}/>}
+                            id="panel1a-header"
+                            style={{backgroundColor: "#5f26b5", color: "white"}}>
+                            <Typography style={{color: "white"}}>Filters</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails style={{padding: 5}}>
+                            {this.create_filter_list()}
+                        </AccordionDetails>
+                    </Accordion>
+                </Hidden>
+                <Hidden smDown>
+                    <Accordion expanded={true}>
+                        <AccordionSummary
+                            id="panel1a-header"
+                            style={{backgroundColor: "#5f26b5", color: "white"}}>
+                            <Typography style={{color: "white"}}>Filters</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails style={{padding: 5}}>
+                            {this.create_filter_list()}
+                        </AccordionDetails>
+                    </Accordion>
+                </Hidden>
+            </React.Fragment>
         )
     }
 
@@ -109,4 +148,12 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({setFilter, filterBooks}, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPanel);
+const useStyles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexGrow: 1,
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(SearchPanel));

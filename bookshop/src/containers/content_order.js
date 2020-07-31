@@ -15,7 +15,7 @@ class OrderContent extends Component {
     }
 
     render() {
-
+        const {classes} = this.props;
         if (!this.props.order) {
             return ""
         }

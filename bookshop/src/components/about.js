@@ -15,7 +15,6 @@ import Link from "@material-ui/core/Link";
 
 export default function About() {
     return (
-        // <Paper>
         <Grid container spacing={1} justify={'center'}>
             <Grid item xs={12} md={8}>
                 <Accordion>
@@ -47,7 +46,8 @@ export default function About() {
                                 contests.
                                 I tried to keep myself occupied; however, after some time I realized that knowledge
                                 without practice doesn’t worth that much, as a result, I decided work on an imaginary
-                                project and that’s how Bookshop was born &#128522;
+                                project and that’s how Bookshop was born
+                                <span role={"img"} aria-label={"happy"}> &#128522;</span>
                             </Typography>
                             <Typography variant={"body1"} align={"justify"} style={{padding: 5}}>
                                 Bookshop is an online bookstore with features to show and filter books,
@@ -63,8 +63,9 @@ export default function About() {
                                 href={"https://github.com/b-yousefi/SampleProject"}>https://github.com/b-yousefi/SampleProject</Link>.
                             </Typography>
                             <Typography variant={"body1"} align={"justify"} style={{padding: 5}}>
-                                I hope you find the final result satisfactory and call me &#128521; As always, I am
-                                looking for new challenges.
+                                I hope you find the final result satisfactory and call me
+                                <span role={"img"} aria-label={"wink"}> &#128521;</span>
+                                As always, I am looking for new challenges.
                             </Typography>
                         </Box>
                     </AccordionDetails>
@@ -91,8 +92,9 @@ export default function About() {
 
                             <Typography variant={"body1"} align={"justify"}>
                                 I love learning new
-                                technologies and even the old ones &#129299; In general, I like learning and cracking
-                                new problems.
+                                technologies and even the old ones
+                                <span role={"img"} aria-label={"glasses"}>&#129299;</span>
+                                In general, I like learning and cracking new problems.
                                 It makes me feel unstoppable and powerful.
                             </Typography>
                             <Typography variant={"body1"} align={"justify"} p={5}>
@@ -106,9 +108,6 @@ export default function About() {
                                 and sunshine. We need to
                                 learn how to cope with difficulties, how to see past the misery and be positive.
                             </Typography>
-                            {/*<Typography variant={"body1"} align={"justify"} >*/}
-                            {/*    I was born in 1988, the year that Iran–Iraq War ended. A war that like any other one brought */}
-                            {/*</Typography>*/}
                         </Box>
                     </AccordionDetails>
                 </Accordion>
@@ -179,54 +178,42 @@ export default function About() {
                     </AccordionSummary>
                     <AccordionDetails>
                         <Grid container spacing={2} alignItems={"center"}>
-                            <Grid item xs={1}>
+                            <Grid item xs={2} md={1}>
                                 <IconButton edge="start" color="primary" aria-label="menu"
                                             href={"https://www.linkedin.com/in/behnaz-yousefi/"}>
                                     <LinkedInIcon fontSize="large"/>
                                 </IconButton>
                             </Grid>
-                            <Grid item xs={11}>
+                            <Grid item xs={10} md={11}>
                                 <Link
                                     href={"https://www.linkedin.com/in/behnaz-yousefi/"}>
                                     https://www.linkedin.com/in/behnaz-yousefi/
                                 </Link>
                             </Grid>
-                            <Grid item xs={1}>
+                            <Grid item xs={2} md={1}>
                                 <MailIcon color={"secondary"} fontSize="large"/>
                             </Grid>
-                            <Grid item xs={11}>
+                            <Grid item xs={10} md={11}>
                                 <Typography variant={"body1"}>
                                     b.yousefi2911@gmail.com
                                 </Typography>
                             </Grid>
-                            <Grid item xs={1}>
+                            <Grid item xs={2} md={1}>
                                 <IconButton edge="start" aria-label="menu"
                                             href={"https://github.com/b-yousefi"}>
                                     <GitHubIcon fontSize="large"/>
                                 </IconButton>
                             </Grid>
-                            <Grid item xs={11}>
+                            <Grid item xs={10} md={11}>
                                 <Link
                                     href={"https://github.com/b-yousefi"}>
                                     https://github.com/b-yousefi
                                 </Link>
                             </Grid>
                         </Grid>
-
-                        {/*<Box flexDirection={"row"}>*/}
-                        {/*    <IconButton edge="start" color="primary" aria-label="menu"*/}
-                        {/*                href={"https://www.linkedin.com/in/behnaz-yousefi/"}>*/}
-                        {/*        <LinkedInIcon fontSize="large"/>*/}
-                        {/*    </IconButton>*/}
-                        {/*    <Link*/}
-                        {/*        href={"https://www.linkedin.com/in/behnaz-yousefi/"}>*/}
-                        {/*        https://www.linkedin.com/in/behnaz-yousefi/*/}
-                        {/*    </Link>*/}
-                        {/*</Box>*/}
                     </AccordionDetails>
                 </Accordion>
             </Grid>
         </Grid>
-        // </Paper>
     )
 }

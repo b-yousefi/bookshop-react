@@ -7,6 +7,7 @@ import {Box, Button, Grid, Paper, TextField,} from '@material-ui/core'
 import clsx from 'clsx';
 import {withStyles} from '@material-ui/core/styles';
 import PasswordControl from '../components/form/control_password';
+import {Redirect} from "react-router-dom";
 
 
 class LoginForm extends Component {
@@ -59,6 +60,9 @@ class LoginForm extends Component {
     }
 
     create_form(classes) {
+        if (this.props.user.isLoggedIn && this.props.match.url.endsWith("/login")) {
+            return <Redirect to={"/home"}/>;
+        }
         return (
             <form noValidate autoComplete="off" action="/" method="POST" onSubmit={this.onSubmitClicked}>
                 <Grid container>
@@ -103,6 +107,12 @@ class LoginForm extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+    }
+}
+
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({loginUser}, dispatch);
 }
@@ -122,4 +132,4 @@ const useStyles = (theme) => ({
     },
 });
 
-export default connect(null, mapDispatchToProps)(withStyles(useStyles)(LoginForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(LoginForm));
