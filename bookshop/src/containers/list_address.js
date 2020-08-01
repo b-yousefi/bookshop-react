@@ -17,6 +17,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Map from '../components/map';
 import {deleteAddress, fetchAddresses} from "../actions/action_address";
 import AddressForm from "./form_address";
+import emptyListPic from "../static/image/emptyList.jpg";
 
 class AddressList extends Component {
     state = {
@@ -37,7 +38,7 @@ class AddressList extends Component {
     }
 
     create_item(key, address) {
-        const {classes} = this.props;
+
         return (
             <ListItem key={key}>
                 {this.props.view &&
@@ -57,8 +58,8 @@ class AddressList extends Component {
                     <Grid item xs={5} style={{height: "150px"}}>
                         <Map zoom={12} lon={address.longitude} lat={address.latitude} editable={false}/>
                     </Grid>
-                    <Grid item xs={5} style={{alignSelf:"center"}}>
-                        <Typography  gutterBottom variant="body1" >
+                    <Grid item xs={5} style={{alignSelf: "center"}}>
+                        <Typography gutterBottom variant="body1">
                             {address.city}- {address.state}- {address.address}
                         </Typography>
                     </Grid>
@@ -92,12 +93,20 @@ class AddressList extends Component {
                 <Switch>
                     <Route exact path={`${this.props.match.url}`}>
                         <Box flexDirection={"column"} className={classes.root}>
-                            <List className={classes.list}>
-                                {[...addresses.keys()].map(key => {
-                                        return this.create_item(key, addresses.get(key))
-                                    }
-                                )}
-                            </List>
+                            {addresses.size === 0 ?
+                                <Box display={"flex"} justifyContent="center" className={classes.emptyList}>
+                                    <img
+                                        src={emptyListPic}
+                                        alt={"Empty List"}/>
+                                </Box>
+                                :
+                                <List className={classes.list}>
+                                    {[...addresses.keys()].map(key => {
+                                            return this.create_item(key, addresses.get(key))
+                                        }
+                                    )}
+                                </List>
+                            }
                             {!this.props.view &&
                             <Box>
                                 <Button variant="contained" color="primary"
@@ -125,6 +134,10 @@ const useStyles = theme => ({
     },
     list: {
         // maxHeight: 500,
+    },
+    emptyList: {
+        width: 'auto',
+        height: 'auto',
     }
 });
 

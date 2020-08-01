@@ -2,22 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import {Card, CardActionArea, CardContent, CardMedia, Grid, Hidden, Typography,} from '@material-ui/core';
-import {Route, Switch,Link,} from 'react-router-dom';
+import {Link, Route, Switch,} from 'react-router-dom';
 
 import AuthorContent from './content_author';
+import {getDateString, getDateStringBrief} from "../utilities/converter_date";
 
 class AuthorList extends Component {
-
-    getDateString(str) {
-        const date = new Date(str.substring(0, 10));
-        const month = date.toLocaleString('default', {month: 'long'});
-        return `${date.getDate()} ${month} ${date.getFullYear()}`;
-    }
-
-    getDateStringBrief(str) {
-        const date = new Date(str.substring(0, 10));
-        return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
-    }
 
     create_item(key, author, classes) {
         return (
@@ -40,10 +30,10 @@ class AuthorList extends Component {
                             </Typography>
                             <Typography variant="body2" color="textSecondary" component="h5">
                                 <Hidden smUp>
-                                    Born: {author.birthday ? this.getDateStringBrief(author.birthday) : ""}
+                                    Born: {author.birthday ? getDateStringBrief(author.birthday) : ""}
                                 </Hidden>
                                 <Hidden xsDown>
-                                    Born: {author.birthday ? this.getDateString(author.birthday) : ""}
+                                    Born: {author.birthday ? getDateString(author.birthday) : ""}
                                 </Hidden>
                             </Typography>
                         </CardContent>
@@ -112,7 +102,6 @@ const useStyles = theme => ({
     title: {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        // height: /* Just enough to show 2 lines */
     }
 });
 

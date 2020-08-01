@@ -4,9 +4,8 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
-import {Box, CardActionArea, CardMedia, Typography} from "@material-ui/core";
+import {Box, CardMedia, Typography} from "@material-ui/core";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -63,20 +62,14 @@ class OrderItem extends Component {
                         title={orderItem.book.name}
                         component={Paper}
                     />
-
-                    {/*<Avatar*/}
-                    {/*    variant="rounded"*/}
-                    {/*    alt={orderItem.book.name}*/}
-                    {/*    src={`data:image/jpeg;base64,${orderItem.book.picture.data}`}*/}
-                    {/*/>*/}
                 </ListItemAvatar>
-                <ListItemText primary={<Typography className={classes.title}  gutterBottom component="h5">
+                <ListItemText primary={<Typography className={classes.title} gutterBottom component="h5">
                     {orderItem.book.name}
                 </Typography>}
                               secondary={
                                   <Box display="flex" flexDirection="row">
                                       <Box style={{width: 150}}>
-                                          <Typography  gutterBottom component="h5">
+                                          <Typography gutterBottom component="h5">
                                               Price: {orderItem.book.price}$
                                           </Typography>
                                       </Box>

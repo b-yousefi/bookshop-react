@@ -43,21 +43,27 @@ class UserInfo extends Component {
                     path="/user_info"
                     render={({location}) => (
                         <Fragment>
+                            {this.props.user.isLoggedIn?
                             <Tabs value={this.getValue(location.pathname)} variant="fullWidth"
                                   className={classes.root}
                                   indicatorColor="secondary"
                                   textColor="secondary"
                             >
                                 <Tab value={"/user_info"} label="Profile" component={Link} to="/user_info"/>
-                                {this.props.user.isLoggedIn &&
-                                <React.Fragment>
-                                    <Tab value={"/user_info/addresses"} label="Addresses" component={Link}
-                                         to="/user_info/addresses"/>
-                                    <Tab value={"/user_info/orders"} label="Orders" component={Link}
-                                         to="/user_info/orders"/>
-                                </React.Fragment>
-                                }
-                            </Tabs>
+
+                                <Tab value={"/user_info/addresses"} label="Addresses" component={Link}
+                                     to="/user_info/addresses"/>
+                                <Tab value={"/user_info/orders"} label="Orders" component={Link}
+                                     to="/user_info/orders"/>
+                            </Tabs> :
+                                <Tabs value={this.getValue(location.pathname)} variant="fullWidth"
+                                      className={classes.root}
+                                      indicatorColor="secondary"
+                                      textColor="secondary"
+                                >
+                                    <Tab value={"/user_info"} label="Profile" component={Link} to="/user_info"/>
+                                </Tabs>
+                            }
                             <Switch>
                                 <Route exact={true} path="/user_info" component={UserForm}/>
                                 <Route path="/user_info/addresses" component={AddressList}/>

@@ -6,6 +6,8 @@ import {fetchOrderDetail} from '../actions/actions_order';
 import {withStyles} from "@material-ui/core/styles";
 import {Divider, Grid, List, Typography} from "@material-ui/core";
 import OrderItem from "./item_order";
+import emptyListPic from "../static/image/emptyList.jpg";
+import Box from "@material-ui/core/Box";
 
 class OrderContent extends Component {
 
@@ -19,31 +21,39 @@ class OrderContent extends Component {
         if (!this.props.order) {
             return ""
         }
-        return (
-            <div className={classes.root}>
-                {this.props.order.orderItems &&
-                <List dense className={classes.list}>
-                    {this.props.order.orderItems.map(orderItem => {
-                        return (
-                            <OrderItem orderItem={orderItem} key={orderItem.id}
-                                       edit_count={false}
-                                       report={true}/>
-                        );
-                    })}
-                </List>
-                }
-                <Divider variant="middle"/>
-                <Grid container style={{padding: 16}} spacing={2} alignItems={"center"}>
-                    <Grid item xs={6} md={4}>
-                        <Typography variant="body1">Total price</Typography>
+        if (this.props.order.orderItems && this.props.order.orderItems.size > 0) {
+            return (
+                <div className={classes.root}>
+                    <List dense className={classes.list}>
+                        {this.props.order.orderItems.map(orderItem => {
+                            return (
+                                <OrderItem orderItem={orderItem} key={orderItem.id}
+                                           edit_count={false}
+                                           report={true}/>
+                            );
+                        })}
+                    </List>
+                    <Divider variant="middle"/>
+                    <Grid container style={{padding: 16}} spacing={2} alignItems={"center"}>
+                        <Grid item xs={6} md={4}>
+                            <Typography variant="body1">Total price</Typography>
+                        </Grid>
+                        <Grid item xs={6} md={4}>
+                            <Typography variant="body1">{this.props.order.totalPrice}$</Typography>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={6} md={4}>
-                        <Typography variant="body1">{this.props.order.totalPrice}$</Typography>
-                    </Grid>
-                </Grid>
-            </div>
+                </div>
 
-        );
+            );
+        } else {
+            return (
+                <Box display={"flex"} className={classes.emptyList}>
+                    <img
+                        src={emptyListPic}
+                        alt={"Empty List"}/>
+                </Box>
+            );
+        }
     }
 }
 
@@ -61,6 +71,10 @@ const useStyles = theme => ({
         minWidth: '50vw',
         maxWidth: '90vw',
         overflow: 'auto',
+    },
+    emptyList: {
+        width: 'auto',
+        height: 'auto',
     }
 });
 
