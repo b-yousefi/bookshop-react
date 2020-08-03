@@ -3,9 +3,9 @@ import {SHOPPING_CART_ACTIONS} from '../actions/actions_shopping_cart';
 function computeTotalPrice(orderItems) {
     let totalPrice = 0;
     orderItems.forEach((orderItem, key)=>{
-       totalPrice+=orderItem.quantity * orderItem.book.price;
+       totalPrice+= orderItem.quantity * parseFloat(orderItem.book.price);
     });
-    return totalPrice;
+    return totalPrice.toFixed(2);
 }
 
 export function ShoppingCartReducer(state = null, action) {

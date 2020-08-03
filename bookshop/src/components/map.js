@@ -75,6 +75,17 @@ export default class Map extends Component {
         this.props.onMarkerChanged(map);
     };
 
+    _onMapClick = event => {
+        const map = {
+            longitude: event.lngLat[0],
+            latitude: event.lngLat[1]
+        };
+        this.setState({
+            marker: map
+        });
+        this.props.onMarkerChanged(map);
+    };
+
     _handleGeocoderViewportChange = (viewport) => {
         const geocoderDefaultOverrides = {transitionDuration: 1000}
         this._updateMarker({
@@ -99,6 +110,7 @@ export default class Map extends Component {
                 height="100%"
                 mapStyle='mapbox://styles/mapbox/streets-v11'
                 onViewportChange={this._updateViewport}
+                onClick={this._onMapClick}
                 mapboxApiAccessToken={TOKEN}
             >
                 {this.props.editable &&

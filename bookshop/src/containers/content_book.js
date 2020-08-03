@@ -8,10 +8,11 @@ import CategoryLink from './link_category';
 import PublicationLink from './link_publication';
 import {fetchBook} from "../actions/actions_book";
 import {bindActionCreators} from "redux";
+import Hidden from "@material-ui/core/Hidden";
 
 class BookContent extends Component {
     componentDidMount() {
-        if(!this.props.book){
+        if (!this.props.book) {
             this.props.fetchBook(this.props.match.params.id);
         }
     }
@@ -20,12 +21,11 @@ class BookContent extends Component {
         if (this.props.book) {
             const book = this.props.book;
             return (
-                <Grid container spacing={2} style={{padding: 20}}>
-                    <Grid item md={2}>
-
-                    </Grid>
+                <Grid container style={{padding: 20}}>
+                    <Hidden smDown>
+                        <Grid item md={2}/>
+                    </Hidden>
                     <Grid item container xs={12} md={8} spacing={2} component={Paper}>
-                        {/* <Paper style={{ width: "100%" }}> */}
                         <Grid item container>
                             <Grid item xs={12} md={4}>
                                 <CardMedia

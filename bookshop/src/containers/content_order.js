@@ -21,7 +21,7 @@ class OrderContent extends Component {
         if (!this.props.order) {
             return ""
         }
-        if (this.props.order.orderItems && this.props.order.orderItems.size > 0) {
+        if (this.props.order.orderItems && this.props.order.orderItems.length > 0) {
             return (
                 <div className={classes.root}>
                     <List dense className={classes.list}>

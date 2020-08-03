@@ -124,6 +124,7 @@ class App extends Component {
                         <Route path="/addresses" component={AddressList}/>
                         <Route path="/user_info" component={UserInfo}/>
                         <Route path="/about" component={About}/>
+                        <Route exact={true} path="/register" component={UserForm}/>
                     </Container>
 
                 </div>

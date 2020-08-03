@@ -97,7 +97,8 @@ class AddressList extends Component {
                                 <Box display={"flex"} justifyContent="center" className={classes.emptyList}>
                                     <img
                                         src={emptyListPic}
-                                        alt={"Empty List"}/>
+                                        alt={"Empty List"}
+                                        style={{maxWidth: '100%'}}/>
                                 </Box>
                                 :
                                 <List className={classes.list}>
@@ -108,7 +109,7 @@ class AddressList extends Component {
                                 </List>
                             }
                             {!this.props.view &&
-                            <Box>
+                            <Box display={"flex"} style={{width: 50, margin: 14}}>
                                 <Button variant="contained" color="primary"
                                         component={NavLink} to={`${this.props.match.url}/new`}
                                 >

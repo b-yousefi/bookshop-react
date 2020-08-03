@@ -31,7 +31,7 @@ export default function About() {
                             <Typography variant={"body1"} align={"justify"} style={{padding: 5}}>
                                 Last summer, I threw caution to the wind and quit my job to pursue my dream, which is
                                 finding a job abroad.
-                                I was called ambitious and in some severe cases a foul to let go of my job without
+                                I was called ambitious and in some severe cases a fool to let go of my job without
                                 finding another position.
                                 I studied English for four months and took the IELTS exam in January and got 8 in
                                 overall.

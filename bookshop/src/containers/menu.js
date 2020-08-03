@@ -46,9 +46,9 @@ class Menu extends Component {
     }
 
     create_tlb_user() {
-        const tooltipLabel = !this.props.user.isLoggedIn ? 'Sign Up' : 'Profile';
         return (
-            <Tooltip title={tooltipLabel} aria-label={tooltipLabel}>
+            this.props.user.isLoggedIn &&
+            <Tooltip title={'Profile'} aria-label={'Profile'}>
                 <IconButton
                     component={NavLink} to="/user_info"
                     color="inherit"
@@ -117,7 +117,7 @@ class Menu extends Component {
         )
     }
 
-    create_about(){
+    create_about() {
         return (
             <Button color="inherit"
                     component={NavLink} to="/about">

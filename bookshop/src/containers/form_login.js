@@ -7,7 +7,8 @@ import {Box, Button, Grid, Paper, TextField,} from '@material-ui/core'
 import clsx from 'clsx';
 import {withStyles} from '@material-ui/core/styles';
 import PasswordControl from '../components/form/control_password';
-import {Redirect} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
+import Link from "@material-ui/core/Link";
 
 
 class LoginForm extends Component {
@@ -54,8 +55,12 @@ class LoginForm extends Component {
         event.preventDefault();
         if (this.validate()) {
             this.props.loginUser(this.state.credentials);
-        } else {
+        }
+    }
 
+    onRegisterClicked = () => {
+        if (this.props.onClick) {
+            this.props.onClick();
         }
     }
 
@@ -86,9 +91,12 @@ class LoginForm extends Component {
                                          required shrink={true} onChange={this.inputChanged}
                                          value={this.state.credentials.password}/>
                     </Grid>
-                    <Grid item xs={12} container justify="center" alignItems="center">
+                    <Grid item xs={6} container justify="center" alignItems="center">
                         <Button variant="contained" type="submit" className={classes.submit}
                                 color="primary">Login</Button>
+                    </Grid>
+                    <Grid item xs={6} container justify="center" alignItems="center">
+                        <Link component={NavLink} to="/register" onClick={this.onRegisterClicked}>Register</Link>
                     </Grid>
                 </Grid>
             </form>
