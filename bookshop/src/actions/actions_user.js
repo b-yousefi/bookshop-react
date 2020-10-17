@@ -24,7 +24,7 @@ export function fetchUser(username) {
 }
 
 export function loginUser(credentials) {
-    const url = `${process.env.REACT_APP_API_URL}/authenticate`;
+    const url = `${process.env.REACT_APP_API_URL}/api/authenticate`;
     return dispatch => {
         axios(
             {
@@ -63,7 +63,7 @@ export function logoutUser() {
 }
 
 export function regsiterUser(user) {
-    const url = `${process.env.REACT_APP_API_URL}/register`;
+    const url = `${process.env.REACT_APP_API_URL}/api/register`;
     return dispatch => {
         axios.post(url, JSON.stringify(user))
             .then(response => {

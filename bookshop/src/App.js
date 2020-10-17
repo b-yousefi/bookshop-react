@@ -89,10 +89,10 @@ class App extends Component {
                 /> : ''
         );
     }
-
+   
     render() {
         return (
-            <BrowserRouter>
+            <BrowserRouter  basename={process.env.PUBLIC_URL}>
                 <div container="true" className={this.props.classes.root}>
 
                     {/* <div>

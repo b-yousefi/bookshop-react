@@ -102,6 +102,7 @@ class SearchPanel extends Component {
     }
 
     render() {
+        const {classes} = this.props;
         return (
             <React.Fragment>
                 <Hidden mdUp>
@@ -118,7 +119,7 @@ class SearchPanel extends Component {
                     </Accordion>
                 </Hidden>
                 <Hidden smDown>
-                    <Accordion expanded={true}>
+                    <Accordion expanded={true} className={classes.staticAccordion}>
                         <AccordionSummary
                             id="panel1a-header"
                             style={{backgroundColor: "#5f26b5", color: "white"}}>
@@ -154,6 +155,9 @@ const useStyles = theme => ({
         flexWrap: 'wrap',
         flexGrow: 1,
     },
+    staticAccordion:{
+        minHeight: 300,
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(SearchPanel));
