@@ -10,6 +10,7 @@ export const BOOK_ACTIONS = {
     UPDATE: 'BOOK_UPDATE',
     DELETE: 'BOOK_DELETE',
     CREATE: 'BOOK_CREATE',
+    REFRESHING: 'BOOK_REFRESH',
 };
 
 const PAGE_SIZE = 8;
@@ -53,6 +54,7 @@ export function filterBooks() {
             //do nothing
             return;
         }
+        dispatch(setRefreshing(true));
         dispatch(filterBooksByPage(1));
     }
 }
@@ -72,10 +74,12 @@ export function filterBooksByPage(page) {
                         filter: Object.assign({}, filter)
                     }
                 );
+                dispatch(setRefreshing(false));
             }).catch(error => {
             dispatch(
                 setError(error.response, BOOK_ACTIONS.FILTER)
             );
+            dispatch(setRefreshing(false));
         })
     }
 }
@@ -83,5 +87,14 @@ export function filterBooksByPage(page) {
 export function fetchBooks() {
     return dispatch => {
         dispatch(filterBooks({publicationIds: [], categoryIds: [], authorIds: []}))
+    }
+}
+
+function setRefreshing(refresh) {
+    return dispatch => {
+        dispatch(                    {
+            type: BOOK_ACTIONS.REFRESHING,
+            refreshing: refresh,
+        })
     }
 }
