@@ -76,7 +76,7 @@ class LoginForm extends Component {
                             onChange={this.inputChanged} value={this.state.credentials.username} name="username"
                             className={clsx(classes.margin, classes.textField)}
                             label="Username"
-                            placeholder="user@mail.com"
+                            placeholder="username"
                             margin="normal"
                             error={this.state.errors && this.state.errors.username}
                             helperText={this.state.errors && this.state.errors.username}
