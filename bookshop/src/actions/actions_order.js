@@ -1,8 +1,7 @@
 import axios from "axios";
 import { setError, setSucc } from "./actions";
 import { fetchUserOrders } from "./actions_user";
-
-const ORDER_URL = `${process.env.REACT_APP_API_URL}/api/orders`;
+import { fetchShoppingCart } from "./actions_shopping_cart";
 
 export const ORDER_ACTIONS = {
   FETCH_ALL: "ORDER_FETCH_ALL",
@@ -16,17 +15,16 @@ export const ORDER_ACTIONS = {
 export function completeOrder(address) {
   return (dispatch, getState) => {
     const user = getState().user;
+    const orderId = getState().shopping_cart.id;
     const addressLink = address._links.self.href;
-    const changedOrder = {
-      id: getState().shopping_cart.id,
+    const colsedOrder = {
       address: addressLink,
-      user: user._links.self.href,
     };
-    const url = `${ORDER_URL}/close_shopping_cart`;
+    const url = `${process.env.REACT_APP_API_URL}/api/users/${user.id}/orders/${orderId}/close`;
     axios({
       method: "POST",
       url,
-      data: JSON.stringify(changedOrder),
+      data: JSON.stringify(colsedOrder),
     })
       .then((response) => {
         dispatch(
@@ -35,7 +33,7 @@ export function completeOrder(address) {
             payload: response,
           })
         );
-        // dispatch(fetchShoppingCart());
+        dispatch(fetchShoppingCart());
         dispatch(fetchUserOrders());
       })
       .catch((error) => {
