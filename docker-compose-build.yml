@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  app:
+    image: "bookshop-react"
+    build:
+      context: .
+      dockerfile: DockerFile.prod
+      args:
+       - REACT_APP_API_URL=https://byousefi.ir:8443/bookshop
+       - PUBLIC_URL=/bookshop
